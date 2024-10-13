@@ -1,6 +1,6 @@
 import hikari
-import hikari-arc
-import hikari-miru
+import arc
+import miru
 
 from environment import *
 
