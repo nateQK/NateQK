@@ -1,4 +1,4 @@
-''' The environment variables and other global constants '''
+''' The environment variables and other global constants. '''
 
 TOKEN: str
 DASH: str = '!'
