@@ -1,3 +1,3 @@
 ''' The database handler module. '''
 
-import json
+import pymongo
