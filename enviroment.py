@@ -1,1 +1,1 @@
-TOKEN: stt
+TOKEN: str

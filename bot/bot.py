@@ -1,11 +1,14 @@
 import hikari
-import hikari-arc
-import hikari-miru
+import arc
+import miru
+from os import path
 
 
 
-bot = hikari.GatewayBot(token="Discord Token Here", banner=None, intents=hikari.Intents.ALL)
+bot = hikari.GatewayBot(token="", banner=None, intents=hikari.Intents.ALL)
+client=arc.GatewayClient(bot)
 
+client.load_extensions_from(path.join("bot", "extensions"))
 
 
 
