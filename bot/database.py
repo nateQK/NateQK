@@ -1,3 +1,3 @@
-''' The database module. '''
+''' The database handler module. '''
 
 import json
