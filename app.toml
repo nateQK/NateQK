@@ -1,0 +1,9 @@
+[DEFAULT]
+token = "SuperSecretDiscordToken"
+prefix = ";"
+
+[database.mongo]
+host = "127.0.0.1"
+port = 0
+username = "username"
+password = "password"
