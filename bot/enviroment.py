@@ -38,7 +38,7 @@ class Config:
         """Uses pydantic to verify config validity"""
         pass
     
-    class Mongo:
+    class Database:
 
         @classmethod
         def getHost(cls):
