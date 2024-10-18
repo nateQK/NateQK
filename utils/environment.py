@@ -23,35 +23,42 @@ class Config:
             print(cls.config)
 
     class Database:
+        
+        def __init__(self):
+            pass
 
-        @classmethod
+        @property
         def getHost(cls) -> str:
             """Fetches values of host from config"""
             return Config.config.DATABASE.host
 
-        @classmethod
+        @property
         def getPort(cls):
             """Fetches values of port from config"""
             return Config.config.DATABASE.port
 
-        @classmethod
+        @property
         def getUsername(cls):
             """Fetches values of username from config"""
             return Config.config.DATABASE.username
 
-        @classmethod
+        @property
         def getPassword(cls):
             """Fetches values of username from config"""
             return Config.config.DATABASE.password
 
 
     class Bot:
-        @classmethod
+        
+        def __init__(self):
+            pass
+
+        @property
         def getToken(cls):
             """Gets bot token from config"""
             return Config.config.DEFAULT.token
 
-        @classmethod
+        @property
         def getPrefix(cls):
             """Gets bot prefix from config"""
             return Config.config.DEFAULT.prefix
@@ -59,10 +66,12 @@ class Config:
 
 if __name__ == "__main__":
     Config.loadConfig()
-    logger.info(Config.Database.getHost())
-    logger.info(Config.Database.getPort())
-    logger.info(Config.Database.getUsername())
-    logger.info(Config.Database.getPassword())
-    logger.info(Config.Bot.getToken())
-    logger.info(Config.Bot.getPrefix())
+    botconf = Config.Bot()
+    dbconf = Config.Database()
+    logger.info(dbconf.getHost)
+    logger.info(dbconf.getPort)
+    logger.info(dbconf.getUsername)
+    logger.info(dbconf.getPassword)
+    logger.info(botconf.getToken)
+    logger.info(botconf.getPrefix)
 
