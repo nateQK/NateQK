@@ -13,7 +13,7 @@ class Config:
     def loadConfig(cls):
         """Loads, Fetches, and Validates config from a pre-determined file"""
 
-        configfile=path.join("app.toml")
+        configfile=path.join("bot", "app.toml")
 
 
         with open(configfile, 'rb') as f:
