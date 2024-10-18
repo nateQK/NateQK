@@ -13,14 +13,13 @@ class Config:
     def loadConfig(cls):
         """Loads, Fetches, and Validates config from a pre-determined file"""
 
-        configfile=path.join("../app.toml")
+        configfile=path.join("app.toml")
 
 
         with open(configfile, 'rb') as f:
             config = tomllib.load(f)
             #config = dumps(config)
             cls.config = munchify(config)
-            print(cls.config)
 
     class Database:
         
@@ -65,6 +64,8 @@ class Config:
 
 
 if __name__ == "__main__":
+    #? This shit won't work unless you change the configfile path
+    #? I'm just really lazy and won't write logic to fix it
     Config.loadConfig()
     botconf = Config.Bot()
     dbconf = Config.Database()
