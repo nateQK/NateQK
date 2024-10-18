@@ -2,10 +2,10 @@ import hikari
 import arc
 import miru
 from os import path
+from .utils import botconf, dbconf
 
 
-
-bot = hikari.GatewayBot(token="", banner=None, intents=hikari.Intents.ALL)
+bot = hikari.GatewayBot(token=botconf.getToken, banner=None, intents=hikari.Intents.ALL)
 client=arc.GatewayClient(bot)
 
 client.load_extensions_from(path.join("bot", "extensions"))
