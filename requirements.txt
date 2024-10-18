@@ -14,7 +14,9 @@ hikari==2.1.0
 hikari-arc==1.4.0
 hikari-miru==4.2.0
 idna==3.10
+loguru==0.7.2
 multidict==6.1.0
+munch==4.0.0
 orjson==3.10.7
 propcache==0.2.0
 pycares==4.4.0
