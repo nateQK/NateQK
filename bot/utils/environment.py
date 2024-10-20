@@ -1,7 +1,7 @@
+'''Config and Other globablly usable variables module.'''
 import tomllib
 from os import path
 from loguru import logger
-from json import dumps
 from munch import munchify
 
 class Config:
@@ -9,7 +9,7 @@ class Config:
     def loadConfig(cls):
         # """Loads, Fetches, and Validates config from a pre-determined file"""
 
-        configfile: path = path.join("bot", "app.toml")
+        configfile = path.join("bot", "app.toml")
 
 
         with open(configfile, 'rb') as file:
@@ -21,29 +21,24 @@ class Config:
         def __init__(self):
             pass
 
-        @property
-        def getHost(cls) -> str:
-            # """Fetches values of host from config"""
-
-            return Config.config.DATABASE.host
+        def getHost(self) -> str:
+            """Fetches values of host from config"""
+            return Config.config.DATABASE.host # type: ignore
 
         @property
-        def getPort(cls):
-            # """Fetches values of port from config"""
-
-            return Config.config.DATABASE.port
-
-        @property
-        def getUsername(cls):
-            # """Fetches values of username from config"""
-
-            return Config.config.DATABASE.username
+        def getPort(self):
+            """Fetches values of port from config"""
+            return Config.config.DATABASE.port # type: ignore
 
         @property
-        def getPassword(cls):
-            # """Fetches values of username from config"""
+        def getUsername(self):
+            """Fetches values of username from config"""
+            return Config.config.DATABASE.username # type: ignore
 
-            return Config.config.DATABASE.password
+        @property
+        def getPassword(self):
+            """Fetches values of username from config"""
+            return Config.config.DATABASE.password # type: ignore
 
 
     class Bot:
@@ -52,15 +47,15 @@ class Config:
 
         @property
         def getToken(cls):
-            # """Gets bot token from config"""
+            """Gets bot token from config"""
 
-            return Config.config.DEFAULT.token
+            return Config.config.DEFAULT.token # type: ignore
 
         @property
         def getPrefix(cls):
-            # """Gets bot prefix from config"""
+            """Gets bot prefix from config"""
 
-            return Config.config.DEFAULT.prefix
+            return Config.config.DEFAULT.prefix # type: ignore
 
 
 if __name__ == "__main__":
