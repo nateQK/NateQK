@@ -9,12 +9,14 @@ Brotli==1.1.0
 cffi==1.17.1
 ciso8601==2.3.1
 colorlog==6.8.2
+dnspython==2.7.0
 frozenlist==1.4.1
 hikari==2.1.0
 hikari-arc==1.4.0
 hikari-miru==4.2.0
 idna==3.10
 loguru==0.7.2
+motor==3.6.0
 multidict==6.1.0
 munch==4.0.0
 orjson==3.10.7
@@ -23,5 +25,6 @@ pycares==4.4.0
 pycparser==2.22
 pydantic==2.9.2
 pydantic_core==2.23.4
+pymongo==4.9.2
 typing_extensions==4.12.2
 yarl==1.15.1
