@@ -2,23 +2,14 @@ import hikari
 import arc
 import miru
 from os import path
-from .utils import botconf, dbconf
 
+from .utils import configBOT, configDB
 
-bot = hikari.GatewayBot(token=botconf.getToken, banner=None, intents=hikari.Intents.ALL)
-client=arc.GatewayClient(bot)
+BOT: hikari.GatewayBot = hikari.GatewayBot(token=configBOT.getToken, banner=None, intents=hikari.Intents.ALL)
+client: arc.GatewayClient = arc.GatewayClient(BOT)
 
 client.load_extensions_from(path.join("bot", "extensions"))
 
-# it's midnight wtf am I writing
-# This code gets called write after the extensions get loaded
 @client.listen()
 async def on_startup(event: arc.StartedEvent):
-    # Jesus Fucking Christ, you have got to be kidding me
-    # This is not a 2012 minecraft video
-    print("Blazing new trails")
-
-
-
-
-
+    print("[=] STARTED")
