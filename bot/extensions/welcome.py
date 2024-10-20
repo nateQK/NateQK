@@ -1,6 +1,7 @@
 import hikari
 import miru
 import arc
+from ..utils.database import Database
 
 from ..utils import configDB
 
@@ -16,6 +17,12 @@ async def ping(ctx: arc.GatewayContext):
 async def environtest(ctx: arc.GatewayContext):
     await ctx.respond("cool!", flags=hikari.MessageFlag.EPHEMERAL)
     print(configDB.getHost)
+
+@plugin.include
+@arc.slash_command("dbtest", "Testing database")
+async def dbtest(ctx: arc.GatewayContext):
+    await ctx.respond(f"{Database.getClient}")
+
 
 @arc.loader
 def load(client: arc.GatewayClient) -> None:
