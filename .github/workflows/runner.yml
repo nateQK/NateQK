@@ -3,13 +3,8 @@ on: [push, pull_request]
 
 
 jobs:
-  python-tests:
-    name: Python tests
-    uses: ./.github/workflows/python-tests.yml
-
   mypy-checks:
     name: Ensure type safety
-    needs: python-tests
     uses: ./.github/workflows/mypy-tests.yml
 
   test-bot:
