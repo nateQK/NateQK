@@ -56,6 +56,20 @@ class Config:
 
             return Config.config.DEFAULT.prefix # type: ignore
 
+    class Version:
+        def __init__(self):
+            pass
+
+        @property
+        def getVersion(self):
+            """Gets NateQK's Current version and compares to latest release"""
+            
+
+            CurrentVersion=Config.config.VERSION.version # type: ignore
+            LatestVersion="0.0.1" # Ping github and look for latest version
+            return CurrentVersion
+
+
 
 if __name__ == "__main__":
     Config.loadConfig()

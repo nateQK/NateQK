@@ -5,6 +5,8 @@ Config.loadConfig()
 
 configBOT: Config.Bot = Config.Bot()
 configDB: Config.Database = Config.Database()
+configVERSION: Config.Version = Config.Version()
+
 
 from .database import Database
 
