@@ -3,13 +3,13 @@ import asyncio
 from motor.motor_asyncio import AsyncIOMotorClient
 from pymongo.server_api import ServerApi
 from loguru import logger
-from . import dbconf
+from . import configDB
 
 class Database:
     
     @classmethod
     async def Connect(cls):
-        cls.uri = f"mongodb://{dbconf.getUsername}:{dbconf.getPassword}@{dbconf.getHost}:{dbconf.getPort}/?authSource=admin"
+        cls.uri = f"mongodb://{configDB.getUsername}:{configDB.getPassword}@{configDB.getHost}:{configDB.getPort}/?authSource=admin"
         cls.client = AsyncIOMotorClient(cls.uri, server_api=ServerApi("1"))
 
     @classmethod

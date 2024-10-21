@@ -7,14 +7,13 @@ from munch import munchify
 class Config:
     @classmethod
     def loadConfig(cls):
-        # """Loads, Fetches, and Validates config from a pre-determined file"""
+        """Loads, Fetches, and Validates config from a pre-determined file"""
 
         configfile = path.join("bot", "app.toml")
 
 
         with open(configfile, 'rb') as file:
             config = tomllib.load(file)
-            #config = dumps(config)
             cls.config = munchify(config)
 
     class Database:
