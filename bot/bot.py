@@ -19,6 +19,6 @@ client: arc.GatewayClient = arc.GatewayClient(BOT)
 client.load_extensions_from(path.join("bot", "extensions"))
 
 @client.listen()
-async def on_startup(event: arc.StartedEvent):
+async def on_startup(event: arc.StartedEvent) -> None:
     print("[=] STARTED")
     logger.info(f"Bot Version: {configVERSION.getVersion}")

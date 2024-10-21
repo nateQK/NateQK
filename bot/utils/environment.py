@@ -9,7 +9,7 @@ class Config:
     def loadConfig(cls):
         """Loads, Fetches, and Validates config from a pre-determined file"""
 
-        configfile = path.join("bot", "app.toml")
+        configfile: str = path.join("bot", "app.toml")
 
 
         with open(configfile, 'rb') as file:
@@ -20,48 +20,49 @@ class Config:
         def __init__(self):
             pass
 
+        @property
         def getHost(self) -> str:
             """Fetches values of host from config"""
             return Config.config.DATABASE.host # type: ignore
 
         @property
-        def getPort(self):
+        def getPort(self) -> str:
             """Fetches values of port from config"""
             return Config.config.DATABASE.port # type: ignore
 
         @property
-        def getUsername(self):
+        def getUsername(self) -> str:
             """Fetches values of username from config"""
             return Config.config.DATABASE.username # type: ignore
 
         @property
-        def getPassword(self):
+        def getPassword(self) -> str:
             """Fetches values of username from config"""
             return Config.config.DATABASE.password # type: ignore
 
 
     class Bot:
-        def __init__(self):
+        def __init__(self) -> None:
             pass
 
         @property
-        def getToken(cls):
+        def getToken(cls) -> str:
             """Gets bot token from config"""
 
             return Config.config.DEFAULT.token # type: ignore
 
         @property
-        def getPrefix(cls):
+        def getPrefix(cls) -> str:
             """Gets bot prefix from config"""
 
             return Config.config.DEFAULT.prefix # type: ignore
 
     class Version:
-        def __init__(self):
+        def __init__(self) -> None:
             pass
 
         @property
-        def getVersion(self):
+        def getVersion(self) -> str:
             """Gets NateQK's Current version and compares to latest release"""
             
 

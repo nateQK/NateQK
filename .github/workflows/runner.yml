@@ -1,0 +1,24 @@
+name: 🔗 GHA
+on: [push, pull_request]
+
+
+jobs:
+  python-tests:
+    name: Python tests
+    uses: ./.github/workflows/python-tests.yml
+
+  mypy-checks:
+    name: Ensure type safety
+    needs: python-tests
+    uses: ./.github/workflows/mypy-tests.yml
+
+  test-bot:
+    name: Test Hikari
+    needs: python-tests
+    uses: ./.github/workflows/hikari-test.yml
+
+  push-docker:
+    name: Build and Push docker
+    needs: test-bot
+    uses: ./.github/workflows/docker.yml
+
