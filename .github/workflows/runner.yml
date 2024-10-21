@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
   mypy-checks:
     name: Ensure type safety
-    uses: ./.github/workflows/mypy-tests.yml
+    uses: ./.github/workflows/mypy-test.yml
 
   test-bot:
     name: Test Hikari
