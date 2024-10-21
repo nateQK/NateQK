@@ -4,8 +4,8 @@ import miru
 from os import path
 from loguru import logger
 
-
 from .utils import configBOT, configDB, configVERSION
+
 
 
 BOT: hikari.GatewayBot = hikari.GatewayBot(
