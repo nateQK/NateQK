@@ -6,11 +6,12 @@ from loguru import logger
 from . import configDB
 
 class Database:
-    
+    uri: str
+    client: AsyncIOMotorClient
     @classmethod
     async def Connect(cls) -> None:
-        cls.uri: str = f"mongodb://{configDB.getUsername}:{configDB.getPassword}@{configDB.getHost}:{configDB.getPort}/?authSource=admin"
-        cls.client: AsyncIOMotorClient = AsyncIOMotorClient(cls.uri, server_api=ServerApi("1"))
+        cls.uri = f"mongodb://{configDB.getUsername}:{configDB.getPassword}@{configDB.getHost}:{configDB.getPort}/?authSource=admin"
+        cls.client = AsyncIOMotorClient(cls.uri, server_api=ServerApi("1"))
 
     @classmethod
     async def Disconnect(cls) -> None:
