@@ -9,7 +9,7 @@ jobs:
 
   test-bot:
     name: Test Hikari
-    needs: python-tests
+    needs: mypy-checks
     uses: ./.github/workflows/hikari-test.yml
 
   push-docker:
