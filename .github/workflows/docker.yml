@@ -1,8 +1,6 @@
-name: Master Docker CI
+name: Docker Build and Push
 
 on:
-  push:
-    branches: [ "master" ]
   workflow_call:
 
 
@@ -13,7 +11,7 @@ jobs:
     permissions:
       contents: read
       packages: write
-
+      id-token: write
     steps:
       - uses: actions/checkout@v4
 
