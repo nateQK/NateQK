@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python -O -m bot
+python -OO -m bot
