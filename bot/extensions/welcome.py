@@ -19,12 +19,12 @@ async def ping(ctx: arc.GatewayContext) -> None:
 @arc.slash_command("environment", "Tests the environment to see if you can access them")
 async def environtest(ctx: arc.GatewayContext) -> None:
     await ctx.respond("cool!", flags=hikari.MessageFlag.EPHEMERAL)
-    print(configDB.getHost)
+    print(configDB.getHost())
 
 @plugin.include
 @arc.slash_command("dbtest", "Testing database")
 async def dbtest(ctx: arc.GatewayContext) -> None:
-    await ctx.respond(f"{Database.getClient}")
+    await ctx.respond(f"{Database.getClient()}")
 
 
 @arc.loader

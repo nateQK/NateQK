@@ -9,7 +9,7 @@ from .utils import configBOT, configDB, configVERSION
 
 
 BOT: hikari.GatewayBot = hikari.GatewayBot(
-    token=configBOT.getToken,
+    token=configBOT.getToken(),
     banner=None, 
     intents=hikari.Intents.ALL
 )
@@ -21,4 +21,4 @@ client.load_extensions_from(path.join("bot", "extensions"))
 @client.listen()
 async def on_startup(event: arc.StartedEvent) -> None:
     print("[=] STARTED")
-    logger.info(f"Bot Version: {configVERSION.getVersion}")
+    logger.info(f"Bot Version: {configVERSION.getVersion()}")

@@ -32,10 +32,10 @@ class Config:
     def loadConfig(cls) -> None:
         """Loads, Fetches, and Validates config from a pre-determined file"""
 
-        #configfile: str = path.join("bot", "app.toml")
+        configfile: str = path.join("bot", "app.toml")
 
         #? Dev configfile
-        configfile: str = path.join("..", "app.toml")
+        #configfile: str = path.join("..", "app.toml")
 
 
         with open(configfile, 'rb') as file:

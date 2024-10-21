@@ -10,7 +10,7 @@ class Database:
     client: AsyncIOMotorClient
     @classmethod
     async def Connect(cls) -> None:
-        cls.uri = f"mongodb://{configDB.getUsername}:{configDB.getPassword}@{configDB.getHost}:{configDB.getPort}/?authSource=admin"
+        cls.uri = f"mongodb://{configDB.getUsername()}:{configDB.getPassword()}@{configDB.getHost()}:{configDB.getPort()}/?authSource=admin"
         cls.client = AsyncIOMotorClient(cls.uri, server_api=ServerApi("1"))
 
     @classmethod
