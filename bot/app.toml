@@ -1,6 +1,5 @@
 [DEFAULT]
 token = "MTI5NDkwOTk2NDQ4OTMyNjU5Mg.GNwqVq.R0_LURf9dcjRFUWFhixGNG6s7tDsBP4ZZUoHD8"
-prefix = ";"
 
 [DATABASE]
 host = "0.0.0.0"
