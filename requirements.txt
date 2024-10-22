@@ -19,6 +19,8 @@ loguru==0.7.2
 motor==3.6.0
 multidict==6.1.0
 munch==4.0.0
+mypy==1.12.1
+mypy-extensions==1.0.0
 orjson==3.10.7
 propcache==0.2.0
 pycares==4.4.0
