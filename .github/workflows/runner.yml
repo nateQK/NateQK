@@ -12,8 +12,8 @@ jobs:
     needs: mypy-checks
     uses: ./.github/workflows/hikari-test.yml
 
-  #push-docker:
-    #name: Build and Push docker
-    #needs: test-bot
-    #uses: ./.github/workflows/docker.yml
+  push-docker:
+    name: Build and Push docker
+    needs: test-bot
+    uses: ./.github/workflows/docker.yml
 
