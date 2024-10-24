@@ -15,6 +15,8 @@ BOT: hikari.GatewayBot = hikari.GatewayBot(
 )
 
 client: arc.GatewayClient = arc.GatewayClient(BOT)
+miruClient: miru.Client = miru.Client.from_arc(client)
+
 
 client.load_extensions_from(path.join("bot", "extensions"))
 
