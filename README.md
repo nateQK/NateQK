@@ -10,11 +10,15 @@
 ## Roadmap to 1.0 release
 
 A few **need** to be completed things before 1.0 release
-> [!IMPORTANT]
+> [!NOTE]
 > as this is a discord bot, we will only use a major.minor release cycle, any bug fixes will be pushed
 > to the same minor version, any breaking changes or massive changes will update the major version.
 > we will have a webpage with the latest version on it and maybe a few other details in json form
 > This will be important as it will allow us to tell the user when their bot is out of date
+
+> [!NOTE]
+> Unless we get paid to do so, we will not maintain old versions of the bot
+> We will use renovate to provide security updates though
 
 - [ ] Full suite of commands
   - [x] Purge
