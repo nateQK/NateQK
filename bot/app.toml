@@ -8,4 +8,7 @@ username = "root"
 password = "example"
 
 [VERSION]
-version = "0.0.1"
+version = "0.0.1-dev"
+
+[MESSAGES]
+activity = "Watching A load of Game Developers"
