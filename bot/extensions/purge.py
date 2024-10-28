@@ -1,3 +1,4 @@
+'''Purge command, basically nothing else'''
 import hikari
 import arc
 import miru
@@ -16,7 +17,8 @@ version: str = "1.0"
 @arc.slash_command("purge", "Purges a select amount of messages. Only works on messages younger than 14 days")
 async def purge(
     ctx: arc.GatewayContext,
-    purge_length: arc.Option[int, arc.IntParams(description="How many messages to Delete?", min=1, max=500)] # type: ignore
+    purge_length: arc.Option[int, arc.IntParams(description="How many messages to Delete?", min=1, max=500)], # type: ignore
+    /
 ) -> None:
 
     bulk_delete_limit: datetime.datetime = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(days=14)

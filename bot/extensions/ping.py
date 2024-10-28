@@ -14,7 +14,7 @@ version: str = "1.0"
 
 @plugin.include
 @arc.slash_command("ping", "Get's bot Latency to discord Servers")
-async def ping(ctx: arc.GatewayContext) -> None:
+async def ping(ctx: arc.GatewayContext, /) -> None:
     """Responds to user calling command with bot latency to discord"""
     botPing: float= float(str(BOT.heartbeat_latency*100)[:-10])
     pingEmbed: hikari.Embed = hikari.Embed()

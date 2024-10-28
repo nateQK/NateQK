@@ -1,13 +1,18 @@
-''' The database handler module. '''
+''' 
+bot/database.py
+The database handler module.
+'''
 import asyncio
 from motor.motor_asyncio import AsyncIOMotorClient
 from pymongo.server_api import ServerApi
 from loguru import logger
+from typing import Any
+
 from . import configDB
 
 class Database:
     uri: str
-    client: AsyncIOMotorClient
+    client: AsyncIOMotorClient[Any]
     @classmethod
     async def Connect(cls) -> None:
         cls.uri = f"mongodb://{configDB.getUsername()}:{configDB.getPassword()}@{configDB.getHost()}:{configDB.getPort()}/?authSource=admin"
@@ -28,13 +33,14 @@ class Database:
 
 
     @classmethod
-    async def getClient(cls) -> AsyncIOMotorClient:
+    async def getClient(cls) -> AsyncIOMotorClient[Any]:
         return cls.client
 
     @classmethod
-    async def reInit(cls):
+    async def reInit(cls) -> None:
         pass
-    
+
+
     @classmethod
     async def testSuite(cls) -> None:
         await cls.Connect()

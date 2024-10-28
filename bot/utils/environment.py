@@ -35,10 +35,6 @@ class Config:
 
         configfile: str = path.join("bot", "app.toml")
 
-        #? Dev configfile
-        #configfile: str = path.join("..", "app.toml")
-
-
         with open(configfile, 'rb') as file:
             config = tomllib.load(file)
         cls.config = Configuration(**config)
@@ -47,7 +43,7 @@ class Config:
     class Database:
 
         @classmethod
-        def getHost(cls):
+        def getHost(cls) -> str:
             """Fetches values of Datbase.host from config"""
             return Config.config.DATABASE.host
 
@@ -94,12 +90,3 @@ class Config:
             return 'this'
 
 
-if __name__ == "__main__":
-    Config.loadConfig()
-    
-    logger.info(Config.Database.getHost())
-    logger.info(Config.Database.getPort())
-    logger.info(Config.Database.getUsername())
-    logger.info(Config.Database.getPassword())
-    logger.info(Config.Bot.getToken())
-    logger.info(Config.Version.getVersion())

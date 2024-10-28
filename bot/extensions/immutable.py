@@ -4,6 +4,7 @@
 import hikari
 import miru
 import arc
+from typing import Any
 
 from ..bot import client, BOT
 from ..utils import configVERSION
@@ -11,14 +12,14 @@ from ..utils import configVERSION
 plugin: arc.GatewayPlugin = arc.GatewayPlugin("Immutable")
 version: str = "1.0"
 
-activityTypes: dict = {
+activityTypes: dict[str, hikari.ActivityType] = {
     'Watching': hikari.ActivityType.WATCHING,
     'Listening': hikari.ActivityType.LISTENING,
     'Streaming': hikari.ActivityType.STREAMING,
     'Playing': hikari.ActivityType.PLAYING
 }
 
-statusTypes: dict = {
+statusTypes: dict[str, hikari.Status] = {
   'Online': hikari.Status.ONLINE,
   'Do Not Disturb': hikari.Status.DO_NOT_DISTURB,
   'Idle': hikari.Status.IDLE,
@@ -28,7 +29,7 @@ statusTypes: dict = {
 
 # NOTE: set bot presence
 @client.listen()
-async def set_presence(event: arc.StartedEvent):
+async def set_presence(event: arc.StartedEvent[Any], /) -> None:
   await BOT.update_presence(
     status=hikari.Status.ONLINE,
     activity=hikari.Activity(name=f'A Game Engine Community', type=hikari.ActivityType.WATCHING)
@@ -37,8 +38,8 @@ async def set_presence(event: arc.StartedEvent):
 
 @plugin.include
 @arc.slash_command("version", "Prints information about the current version of the bot and if an update is available")
-async def versions(ctx: arc.GatewayContext) -> None:
-  # INFO: This is not ready yet, but the code should work preetty simply
+async def versions(ctx: arc.GatewayContext, /) -> None:
+  # INFO: This is not ready yet, but the code should work
   versionEmbed: hikari.Embed = hikari.Embed(title='Version', url="https://nateqk.github.io/")
   current:str = configVERSION.getVersion()
   latest:str = configVERSION.latestVersion()
@@ -57,6 +58,6 @@ async def versions(ctx: arc.GatewayContext) -> None:
 
 
 @arc.loader
-def loader(Client: arc.GatewayClient):
+def loader(Client: arc.GatewayClient) -> None:
     Client.add_plugin(plugin)
 
