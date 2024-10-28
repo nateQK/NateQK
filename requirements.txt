@@ -6,7 +6,9 @@ alluka==0.3.2
 annotated-types==0.7.0
 attrs==24.2.0
 Brotli==1.1.0
+certifi==2024.8.30
 cffi==1.17.1
+charset-normalizer==3.4.0
 ciso8601==2.3.1
 colorlog==6.8.2
 dnspython==2.7.0
@@ -28,5 +30,7 @@ pycparser==2.22
 pydantic==2.9.2
 pydantic_core==2.23.4
 pymongo==4.9.2
+requests==2.32.3
 typing_extensions==4.12.2
+urllib3==2.2.3
 yarl==1.15.1

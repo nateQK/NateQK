@@ -4,7 +4,8 @@ from os import path
 from loguru import logger
 from pydantic import BaseModel
 from typing import TypedDict
-
+from requests import request
+import requests
 
 class DefaultConfig(BaseModel):
     token: str
@@ -85,6 +86,12 @@ class Config:
             LatestVersion="0.0.1" # Ping github and look for latest version
             return CurrentVersion
 
+        @classmethod
+        def latestVersion(cls) -> str:
+            """Gets NateQK's latest version"""
+            req: requests.Response = requests.get("https://nateqk.github.io/latest")
+            logger.error(req.json())
+            return 'this'
 
 
 if __name__ == "__main__":
