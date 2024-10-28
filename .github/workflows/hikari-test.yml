@@ -33,6 +33,6 @@ jobs:
       # Step 4: Run the bot (using a timeout for the test, e.g., 10 seconds)
       - name: Run Discord Bot
         run: |
-          timeout 10 bash run.sh
-        continue-on-error: true
+          timeout 20 bash run.sh
+        continue-on-error: false
 
