@@ -8,7 +8,7 @@ from ..utils.database import Database
 from ..utils import configDB
 
 plugin: arc.GatewayPlugin = arc.GatewayPlugin("Ping")
-
+version: str = "1.0"
 
 
 
@@ -20,8 +20,8 @@ async def ping(ctx: arc.GatewayContext) -> None:
     pingEmbed: hikari.Embed = hikari.Embed()
     
     pingEmbed.title = "Ping!"
-    if botPing < 35: pingEmbed.color = hikari.Color(int("15cdf2", 16))
-    elif botPing < 50: pingEmbed.color = hikari.Color(int("d2f884", 16))
+    if botPing < 35: pingEmbed.color = hikari.Color(int("15cdf2"))
+    elif botPing < 50: pingEmbed.color = hikari.Color(int("d2f884"))
     elif botPing > 50: pingEmbed.color = hikari.Color(int("c73ea2"))
     elif botPing > 200: pingEmbed.color = hikari.Color(int("ff0000"))
 
