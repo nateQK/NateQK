@@ -9,7 +9,8 @@ jobs:
     strategy:
       matrix:
         python-version: [3.11, 3.12, 3.13]
-        architecture: [x64]
+        architecture: [x64, arm64, x86]
+
     steps:
       - name: Setup Python
         uses: actions/setup-python@v4
