@@ -11,6 +11,7 @@ cffi==1.17.1
 charset-normalizer==3.4.0
 ciso8601==2.3.1
 colorlog==6.8.2
+cryptography==43.0.3
 dnspython==2.7.0
 frozenlist==1.4.1
 hikari==2.1.0
@@ -31,6 +32,12 @@ pydantic==2.9.2
 pydantic_core==2.23.4
 pymongo==4.9.2
 requests==2.32.3
+types-cffi==1.16.0.20240331
+types-colorama==0.4.15.20240311
+types-croniter==3.0.4.20241027
+types-pyOpenSSL==24.1.0.20240722
+types-requests==2.32.0.20241016
+types-setuptools==75.2.0.20241025
 typing_extensions==4.12.2
 urllib3==2.2.3
 yarl==1.15.1
