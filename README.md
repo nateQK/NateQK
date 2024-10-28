@@ -31,7 +31,8 @@ A few **need** to be completed things before 1.0 release
   - [ ] Warn(Warn's a user adding a warning tick to the user in the db)
   - [ ] [Backup command](#backup-command)
 - [ ] Database Backups
-  I have no idea how hard this will be, because I don't work with nosql     
+  I have no idea how hard this will be, because I don't work with nosql
+
 
 ## Backup command
 This will take a backup of the datbase, and all other relevent data and store it in a .tar.gz
