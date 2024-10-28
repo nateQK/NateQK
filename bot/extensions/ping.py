@@ -20,10 +20,10 @@ async def ping(ctx: arc.GatewayContext, /) -> None:
     pingEmbed: hikari.Embed = hikari.Embed()
     
     pingEmbed.title = "Ping!"
-    if botPing < 35: pingEmbed.color = hikari.Color(int("15cdf2"))
-    elif botPing < 50: pingEmbed.color = hikari.Color(int("d2f884"))
-    elif botPing > 50: pingEmbed.color = hikari.Color(int("c73ea2"))
-    elif botPing > 200: pingEmbed.color = hikari.Color(int("ff0000"))
+    if botPing < 35: pingEmbed.color = hikari.Color(int("15cdf2", 16))
+    elif botPing < 50: pingEmbed.color = hikari.Color(int("d2f884", 16))
+    elif botPing > 50: pingEmbed.color = hikari.Color(int("c73ea2", 16))
+    elif botPing > 200: pingEmbed.color = hikari.Color(int("ff0000", 16))
 
     if botPing > 200:
         pingEmbed.add_field(name="Latency!??!?!?!", value=f'{botPing} Ms', inline=True)
