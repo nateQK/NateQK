@@ -1,3 +1,9 @@
+'''Base bot containing things such as
+
+BOT,
+client,
+and some listen events for starting the bot
+'''
 import hikari
 import arc
 import miru
