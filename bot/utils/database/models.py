@@ -1,28 +1,28 @@
-from sqlalchemy import Column, BigInteger, ForeignKey
-from sqlalchemy.orm import DeclarativeBase, declarative_base
+from sqlalchemy import BigInteger, ForeignKey, Column, Integer
+
+from sqlalchemy.orm import mapped_column, relationship, Mapped, declarative_base
 from sqlalchemy.ext.asyncio import AsyncAttrs
-from sqlalchemy.orm import mapped_column, relationship, Mapped
 
 import asyncio
 
 Base = declarative_base()
 
-#class Base(DeclarativeBase):
-#    pass
-
-class ServerSettings(Base):
+# NOTE: The things I'm ignoring here are not compatible with mypy, this is why they fail
+class ServerSettings(Base): # type: ignore
     __tablename__ = "guildSettings"
 
-    guildID: Mapped[int] = mapped_column(primary_key=True, unique=True)
-    serverJoin: Mapped[int] = mapped_column(autoincrement=True)
-    ownerID: Mapped[BigInteger]
+    guildID = Column(BigInteger, primary_key=True, unique=True)
+    serverJoin = Column(Integer, autoincrement=True)
+    ownerID = Column(Integer)
 
-class views(Base):
+    views = relationship("Views", back_populates="server")
+
+class Views(Base): # type: ignore
     __tablename__ = "arcViews"
 
-    id: Mapped[int] = mapped_column(primary_key=True)
-    viewID: Mapped[int]
-    guildID: Mapped[int] = mapped_column(ForeignKey(f"{ServerSettings.__tablename__}.guildID"))
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    viewID = Column(BigInteger)
+    guildID = ForeignKey(f"{ServerSettings.__tablename__}.guildID")
 
     server = relationship("ServerSettings", back_populates="views")
 

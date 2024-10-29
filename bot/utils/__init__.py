@@ -8,6 +8,6 @@ configDB: Config.Database = Config.Database()
 configVERSION: Config.Version = Config.Version()
 
 
-from .database import Database
+from .database.database import Database
 
 asyncio.run(Database.Connect())

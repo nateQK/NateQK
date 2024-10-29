@@ -8,7 +8,10 @@ from .. import configDB as config
 alembic_cfg = Config()
 alembic_cfg.set_main_option("script_location", "bot/utils/database/alembic")
 alembic_cfg.set_main_option("prepend_sys_path", ".")
-if not config.getPassword == "":
+
+
+
+if not str(config.getPassword) == str(""):
     alembic_cfg.set_main_option("sqlalchemy.url", f'{config.getEngine}://{config.getUsername}:{config.getPassword}@{config.getHost}:{config.getPort}/{config.getDatabase}')
 else:
     alembic_cfg.set_main_option("sqlalchemy.url", f'{config.getEngine}://{config.getUsername}@{config.getHost}:{config.getPort}/{config.getDatabase}')

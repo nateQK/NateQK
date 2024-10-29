@@ -18,12 +18,16 @@ class DatabaseConfig(BaseModel):
     password: str
     database: str
 
+class MessageConfig(BaseModel):
+    activity: str
+
 class VersionConfig(BaseModel):
     version: str
 
 class Configuration(BaseModel):
     DEFAULT: DefaultConfig
     DATABASE: DatabaseConfig
+    MESSAGE: MessageConfig
     VERSION: VersionConfig
 
 
@@ -70,10 +74,14 @@ class Config:
             return Config.config.DATABASE.password
         
         @classmethod
-        def getDatabase(cls):
+        def getDatabase(cls) -> str:
             """Fetches values of Database.database from config"""
             return Config.config.DATABASE.database
 
+    class Message:
+        @classmethod
+        def getActivity(cls) -> str:
+            return Config.config.MESSAGE.activity
 
     class Bot:
 

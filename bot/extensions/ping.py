@@ -3,7 +3,6 @@ import miru
 import arc
 
 from ..bot import BOT
-from ..utils.database import Database
 
 from ..utils import configDB
 
