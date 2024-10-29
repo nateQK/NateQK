@@ -2,6 +2,7 @@
 token = "MTI5NDkwOTk2NDQ4OTMyNjU5Mg.GNwqVq.R0_LURf9dcjRFUWFhixGNG6s7tDsBP4ZZUoHD8"
 
 [DATABASE]
+engine = "postgres"
 host = "0.0.0.0"
 port = 27017
 username = "root"

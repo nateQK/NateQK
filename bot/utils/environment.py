@@ -11,10 +11,12 @@ class DefaultConfig(BaseModel):
     token: str
 
 class DatabaseConfig(BaseModel):
+    engine: str
     host: str
     port: int
     username: str
     password: str
+    database: str
 
 class VersionConfig(BaseModel):
     version: str
@@ -43,6 +45,11 @@ class Config:
     class Database:
 
         @classmethod
+        def getEngine(cls) -> str:
+            """Fetches values of Datbase.host from config"""
+            return Config.config.DATABASE.engine
+        
+        @classmethod
         def getHost(cls) -> str:
             """Fetches values of Datbase.host from config"""
             return Config.config.DATABASE.host
@@ -61,6 +68,11 @@ class Config:
         def getPassword(cls) -> str:
             """Fetches values of Database.username from config"""
             return Config.config.DATABASE.password
+        
+        @classmethod
+        def getDatabase(cls):
+            """Fetches values of Database.database from config"""
+            return Config.config.DATABASE.database
 
 
     class Bot:
