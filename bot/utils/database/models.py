@@ -1,14 +1,17 @@
 from sqlalchemy import BigInteger, ForeignKey, Column, Integer
 
-from sqlalchemy.orm import mapped_column, relationship, Mapped, declarative_base
+from sqlalchemy.orm import DeclarativeBase, relationship
 from sqlalchemy.ext.asyncio import AsyncAttrs
 
 import asyncio
 
-Base = declarative_base()
+#Base = declarative_base()
+
+class Base(DeclarativeBase):
+    pass
 
 # NOTE: The things I'm ignoring here are not compatible with mypy, this is why they fail
-class ServerSettings(Base): # type: ignore
+class ServerSettings(Base):
     __tablename__ = "guildSettings"
 
     guildID = Column(BigInteger, primary_key=True, unique=True)
@@ -17,7 +20,7 @@ class ServerSettings(Base): # type: ignore
 
     views = relationship("Views", back_populates="server")
 
-class Views(Base): # type: ignore
+class Views(Base):
     __tablename__ = "arcViews"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
