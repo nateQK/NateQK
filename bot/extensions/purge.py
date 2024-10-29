@@ -12,8 +12,8 @@ version: str = "1.0"
 
 
 @plugin.include
-@arc.with_hook(arc.user_limiter(60, 1))
-@arc.with_hook(arc.has_permissions(hikari.Permissions.MANAGE_CHANNELS))
+@arc.with_hook(arc.user_limiter(60, 5))
+@arc.with_hook(arc.has_permissions(hikari.Permissions.MANAGE_MESSAGES))
 @arc.slash_command("purge", "Purges a select amount of messages. Only works on messages younger than 14 days")
 async def purge(
     ctx: arc.GatewayContext,
