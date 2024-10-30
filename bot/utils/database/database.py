@@ -43,7 +43,7 @@ class Database:
     async def connect(cls) -> None:
         try:
             cls.engine = create_async_engine(
-                f"{cls.engineType["database"]}+{cls.engineType["driver"]}://{configDB.getUsername}:{configDB.getPassword}@{configDB.getHost}/{configDB.getDatabase}",
+                f"{cls.engineType['database']}+{cls.engineType['driver']}://{configDB.getUsername}:{configDB.getPassword}@{configDB.getHost}/{configDB.getDatabase}",
                 pool_size=10,
                 max_overflow=10,
                 pool_timeout=30,
