@@ -10,4 +10,4 @@ configVERSION: Config.Version = Config.Version()
 
 from .database.database import Database
 
-asyncio.run(Database.Connect())
+asyncio.run(Database.connect())
