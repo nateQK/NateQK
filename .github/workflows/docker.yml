@@ -55,7 +55,8 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            ghcr.io/${{ env.repo_lowercase }}:latest, ghcr.io/${{ env.repo_lowercase }}:${{ github.run_number }}
+            ghcr.io/${{ env.repo_lowercase }}:${{ github.branch }}, ghcr.io/${{ env.repo_lowercase }}:${{ github.run_number }}
           platforms: linux/amd64,linux/arm64/v8
-
           labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
