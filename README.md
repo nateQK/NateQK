@@ -19,6 +19,10 @@ A few **need** to be completed things before 1.0 release
 > [!NOTE]
 > Unless we get paid to do so, we will not maintain old versions of the bot
 > We will use renovate to provide security updates though
+>
+> This also Applies to extensions,
+> Some extensions might stop recieving updates, or we might not add the features some people want.
+> Depending on the general use of the plugin and it's performance
 
 - [ ] Full suite of commands
   - [x] Purge
