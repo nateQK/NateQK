@@ -10,7 +10,7 @@ Connection Info
 
 import asyncio
 from loguru import logger
-from typing import Any, TypedDict
+from typing import Any, TypedDict, Literal
 from pydantic import BaseModel
 import sqlalchemy
 from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
@@ -25,11 +25,11 @@ class DBInfo(TypedDict):
     driver: str
 
 
-class DBTypes(BaseModel):
-    postgres: dict[str, str] = {"database": "postgresql", "driver": "asyncpg"}
-    mysql: dict[str, str] = {"database": "mysql", "driver": "aiomysql"}
-    mariadb: dict[str, str] = {"database": "mysql", "driver": "aiomysql"}
-    sqlite: dict[str, str] = {"database": "sqlite", "driver": "aiosqlite"}
+class DBTypes():
+    postgresql: DBInfo = {"database": "postgresql", "driver": "asyncpg"}
+    mysql: DBInfo = {"database": "mysql", "driver": "aiomysql"}
+    mariadb: DBInfo = {"database": "mysql", "driver": "aiomysql"}
+    sqlite: DBInfo = {"database": "sqlite", "driver": "aiosqlite"}
 
 
 
@@ -42,8 +42,16 @@ class Database:
     @classmethod
     async def connect(cls) -> None:
         try:
+            cls.engineType = getattr(DBTypes, configDB.getEngine())
+            logger.debug(f"""
+                        Username: {configDB.getUsername()}
+                        Password: {configDB.getPassword()}
+                        Host: {configDB.getHost()}
+                        Database: {configDB.getDatabase()}
+                        Engine Info: {cls.engineType}
+                """)
             cls.engine = create_async_engine(
-                f"{cls.engineType['database']}+{cls.engineType['driver']}://{configDB.getUsername}:{configDB.getPassword}@{configDB.getHost}/{configDB.getDatabase}",
+                f"{cls.engineType['database']}+{cls.engineType['driver']}://{configDB.getUsername()}:{configDB.getPassword()}@{configDB.getHost()}/{configDB.getDatabase()}",
                 pool_size=10,
                 max_overflow=10,
                 pool_timeout=30,
@@ -55,6 +63,7 @@ class Database:
             logger.error(e)
 
         pass
+
 
     @classmethod
     async def Disconnect(cls) -> None:
@@ -73,6 +82,7 @@ class Database:
     @classmethod
     async def reInit(cls) -> None:
         pass
+    
 
 
     @classmethod

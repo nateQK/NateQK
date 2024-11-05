@@ -52,7 +52,8 @@ class Config:
         def getEngine(cls) -> str:
             """Fetches values of Datbase.host from config"""
             return Config.config.DATABASE.engine
-        
+
+
         @classmethod
         def getHost(cls) -> str:
             """Fetches values of Datbase.host from config"""
