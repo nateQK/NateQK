@@ -9,7 +9,7 @@ username = "root"
 password = "example"
 database = "testdb"
 [VERSION]
-version = "0.2"
+version = "0.3-dev"
 
 [MESSAGE]
 activity = "Watching A load of Game Developers"
