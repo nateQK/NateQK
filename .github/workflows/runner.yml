@@ -9,7 +9,7 @@ jobs:
 
   test-bot:
     name: Test Hikari
-    needs: mypy-checks
+    needs: pyright-pylance-checks
     uses: ./.github/workflows/hikari-test.yml
 
   push-docker:
