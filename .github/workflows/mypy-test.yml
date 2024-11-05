@@ -9,14 +9,13 @@ jobs:
     strategy:
       matrix:
         python-version: [3.11, 3.12, 3.13]
-        architecture: [x64, arm64, x86]
 
     steps:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-          architecture:  ${{ matrix.architexture }}
+          architecture:  x86
       
       - name: Checkout
         uses: actions/checkout@v3
