@@ -12,8 +12,10 @@ services:
       POSTGRES_DB: testdb
 
   bot:
-    image: ghcr.io/nateqk:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: nateqk
     restart: unless-stopped
     volumes:
-      - yourpath.toml:/src/bot/app.toml
+      - ./bot/app.toml:/src/bot/app.toml
