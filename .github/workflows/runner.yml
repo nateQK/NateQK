@@ -3,7 +3,7 @@ on: [push, pull_request]
 
 
 jobs:
-  pyright/pylance-checks:
+  pyright-pylance-checks:
     name: Ensure type safety
     uses: ./.github/workflows/pyright-test.yml
 
