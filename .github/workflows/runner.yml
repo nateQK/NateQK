@@ -3,9 +3,9 @@ on: [push, pull_request]
 
 
 jobs:
-  mypy-checks:
+  pyright/pylance-checks:
     name: Ensure type safety
-    uses: ./.github/workflows/mypy-test.yml
+    uses: ./.github/workflows/pyright-test.yml
 
   test-bot:
     name: Test Hikari
