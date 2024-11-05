@@ -4,16 +4,22 @@ from os import path
 from loguru import logger
 from pydantic import BaseModel
 from typing import TypedDict
-
+from requests import request
+import requests
 
 class DefaultConfig(BaseModel):
     token: str
 
 class DatabaseConfig(BaseModel):
+    engine: str
     host: str
     port: int
     username: str
     password: str
+    database: str
+
+class MessageConfig(BaseModel):
+    activity: str
 
 class VersionConfig(BaseModel):
     version: str
@@ -21,6 +27,7 @@ class VersionConfig(BaseModel):
 class Configuration(BaseModel):
     DEFAULT: DefaultConfig
     DATABASE: DatabaseConfig
+    MESSAGE: MessageConfig
     VERSION: VersionConfig
 
 
@@ -34,10 +41,6 @@ class Config:
 
         configfile: str = path.join("bot", "app.toml")
 
-        #? Dev configfile
-        #configfile: str = path.join("..", "app.toml")
-
-
         with open(configfile, 'rb') as file:
             config = tomllib.load(file)
         cls.config = Configuration(**config)
@@ -46,7 +49,13 @@ class Config:
     class Database:
 
         @classmethod
-        def getHost(cls):
+        def getEngine(cls) -> str:
+            """Fetches values of Datbase.host from config"""
+            return Config.config.DATABASE.engine
+
+
+        @classmethod
+        def getHost(cls) -> str:
             """Fetches values of Datbase.host from config"""
             return Config.config.DATABASE.host
 
@@ -64,7 +73,16 @@ class Config:
         def getPassword(cls) -> str:
             """Fetches values of Database.username from config"""
             return Config.config.DATABASE.password
+        
+        @classmethod
+        def getDatabase(cls) -> str:
+            """Fetches values of Database.database from config"""
+            return Config.config.DATABASE.database
 
+    class Message:
+        @classmethod
+        def getActivity(cls) -> str:
+            return Config.config.MESSAGE.activity
 
     class Bot:
 
@@ -85,14 +103,11 @@ class Config:
             LatestVersion="0.0.1" # Ping github and look for latest version
             return CurrentVersion
 
+        @classmethod
+        def latestVersion(cls) -> str:
+            """Gets NateQK's latest version"""
+            req: requests.Response = requests.get("https://nateqk.github.io/latest")
+            logger.error(req.json())
+            return 'this'
 
 
-if __name__ == "__main__":
-    Config.loadConfig()
-    
-    logger.info(Config.Database.getHost())
-    logger.info(Config.Database.getPort())
-    logger.info(Config.Database.getUsername())
-    logger.info(Config.Database.getPassword())
-    logger.info(Config.Bot.getToken())
-    logger.info(Config.Version.getVersion())

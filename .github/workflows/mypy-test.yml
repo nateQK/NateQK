@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         python-version: [3.11, 3.12, 3.13]
-        architecture: [x64]
+
     steps:
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -31,4 +31,4 @@ jobs:
           checkName: 'mypy'   # NOTE: this needs to be the same as the job name
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        continue-on-error: true
+        continue-on-error: false
