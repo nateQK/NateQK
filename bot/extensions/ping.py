@@ -1,10 +1,10 @@
 import hikari
-import miru
+#import miru
 import arc
 
 from ..bot import BOT
 
-from ..utils import configDB
+#from ..utils import configDB
 
 plugin: arc.GatewayPlugin = arc.GatewayPlugin("Ping")
 version: str = "1.0"

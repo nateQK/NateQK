@@ -2,7 +2,7 @@
 # NOTE: This plugin doesn't get an unloader function, this one should always be on
 
 import hikari
-import miru
+#import miru
 import arc
 from typing import Any
 

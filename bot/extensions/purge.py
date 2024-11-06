@@ -1,7 +1,7 @@
 '''Purge command, basically nothing else'''
 import hikari
 import arc
-import miru
+#import miru
 import datetime
 from loguru import logger
 
