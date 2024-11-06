@@ -4,7 +4,7 @@ on:
 
 
 jobs:
-  mypy:
+  pyright:
     runs-on: ubuntu-latest
     strategy:
       matrix:
