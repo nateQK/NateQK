@@ -49,6 +49,7 @@ async def versions(ctx: arc.GatewayContext, /) -> None:
     versionEmbed.colour = hikari.Color(int("ff0000"))
     versionEmbed.add_field(name="Latest Version", value=latest)
     if current[0] != latest[0]:
+      # TODO:
       versionEmbed.add_field(name="Update Recommended", value="You're at least 1 major version behind! Check Upgrade notes to ensure you upgrade properly")
       versionEmbed.url = f"https://nateqk.github.io/upgrade/{current[0]}/to/{latest[0]}"
 

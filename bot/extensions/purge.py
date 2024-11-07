@@ -33,6 +33,8 @@ async def purge(
 
 
 
+
+
 @purge.set_error_handler
 async def error_handler(ctx: arc.GatewayContext, exc: Exception) -> None:
     logger.error(type(exc))
@@ -40,14 +42,16 @@ async def error_handler(ctx: arc.GatewayContext, exc: Exception) -> None:
     if isinstance(exc, arc.errors.UnderCooldownError):
         await ctx.respond(exc, flags=hikari.MessageFlag.EPHEMERAL)
         return
-    
+
 
 
 
 @arc.loader
 def load(client: arc.GatewayClient) -> None:
+    logger.info(f"Loading {plugin.name} Plugin")
     client.add_plugin(plugin)
 
 @arc.unloader
 def unload(client: arc.GatewayClient) -> None:
+    logger.info(f"Un-Loading {plugin.name} Plugin")
     client.remove_plugin(plugin)
