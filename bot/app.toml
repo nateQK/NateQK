@@ -10,7 +10,7 @@ password = "postgres"
 database = "testdb"
 
 [VERSION]
-version = "0.3"
+version = "0.4-dev"
 
 [MESSAGE]
 activity = "Watching A load of Game Developers"
