@@ -1,16 +1,10 @@
 from sqlalchemy import BigInteger, ForeignKey, Column, Integer
 
 from sqlalchemy.orm import DeclarativeBase, relationship
-#from sqlalchemy.ext.asyncio import AsyncAttrs
-
-#import asyncio
-
-#Base = declarative_base()
 
 class Base(DeclarativeBase):
     pass
 
-# NOTE: The things I'm ignoring here are not compatible with mypy, this is why they fail
 class ServerSettings(Base):
     __tablename__ = "guildSettings"
 
