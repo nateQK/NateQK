@@ -1,8 +1,6 @@
 from alembic.config import Config
 from alembic import command
 from .. import configDB as config
-from typing import TypedDict
-from pydantic import BaseModel
 
 
 

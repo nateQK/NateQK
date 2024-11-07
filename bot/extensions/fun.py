@@ -4,10 +4,8 @@ from ..bot import BOT
 #import miru
 from loguru import logger
 import requests
-from json import loads
 from typing import Any
 from random import choice
-from pydantic import BaseModel
 
 plugin: arc.GatewayPlugin = arc.GatewayPlugin("Fun")
 version: str = "1.0"

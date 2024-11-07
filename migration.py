@@ -1,4 +1,4 @@
-from typing import Any, Required
+from typing import Any
 import typer
 import os
 import subprocess
