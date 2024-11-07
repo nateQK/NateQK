@@ -1,10 +1,12 @@
 import hikari
-import miru
+#import miru
 import arc
 
 from ..bot import BOT
 
-from ..utils import configDB
+from loguru import logger
+
+#from ..utils import configDB
 
 plugin: arc.GatewayPlugin = arc.GatewayPlugin("Ping")
 version: str = "1.0"
@@ -35,8 +37,10 @@ async def ping(ctx: arc.GatewayContext, /) -> None:
 
 @arc.loader
 def load(client: arc.GatewayClient) -> None:
+    logger.info(f"Loading {plugin.name} Plugin")
     client.add_plugin(plugin)
 
 @arc.unloader
 def unloader(client: arc.GatewayClient) -> None:
+    logger.info(f"Un-Loading {plugin.name} Plugin")
     client.remove_plugin(plugin)

@@ -1,7 +1,7 @@
 '''Purge command, basically nothing else'''
 import hikari
 import arc
-import miru
+#import miru
 import datetime
 from loguru import logger
 
@@ -17,8 +17,7 @@ version: str = "1.0"
 @arc.slash_command("purge", "Purges a select amount of messages. Only works on messages younger than 14 days")
 async def purge(
     ctx: arc.GatewayContext,
-    purge_length: arc.Option[int, arc.IntParams(description="How many messages to Delete?", min=1, max=500)], # type: ignore
-    /
+    purge_length: arc.Option[int, arc.IntParams(description="How many messages to Delete?", min=1, max=500)] # type: ignore
 ) -> None:
 
     bulk_delete_limit: datetime.datetime = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(days=14)
@@ -34,6 +33,8 @@ async def purge(
 
 
 
+
+
 @purge.set_error_handler
 async def error_handler(ctx: arc.GatewayContext, exc: Exception) -> None:
     logger.error(type(exc))
@@ -41,14 +42,16 @@ async def error_handler(ctx: arc.GatewayContext, exc: Exception) -> None:
     if isinstance(exc, arc.errors.UnderCooldownError):
         await ctx.respond(exc, flags=hikari.MessageFlag.EPHEMERAL)
         return
-    
+
 
 
 
 @arc.loader
 def load(client: arc.GatewayClient) -> None:
+    logger.info(f"Loading {plugin.name} Plugin")
     client.add_plugin(plugin)
 
 @arc.unloader
 def unload(client: arc.GatewayClient) -> None:
+    logger.info(f"Un-Loading {plugin.name} Plugin")
     client.remove_plugin(plugin)

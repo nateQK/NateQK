@@ -17,5 +17,5 @@ RUN useradd app
 USER app
 
 EXPOSE 8080
-CMD ["bash", "./app.sh"]
+CMD ["bash", "/app/run.sh"]
 

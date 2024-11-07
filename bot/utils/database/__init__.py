@@ -1,8 +1,6 @@
 from alembic.config import Config
 from alembic import command
 from .. import configDB as config
-from typing import TypedDict
-from pydantic import BaseModel
 
 
 
@@ -22,7 +20,7 @@ else:
 
 
 # NOTE: Upgrade database tables to latest version
-#command.upgrade(alembic_cfg, "head")
+command.upgrade(alembic_cfg, "head")
 
 # WARN: This file still needs to initialized the database, this will be done by calling connect from the database file
 

@@ -4,12 +4,13 @@ token = "MTI5NDkwOTk2NDQ4OTMyNjU5Mg.GNwqVq.R0_LURf9dcjRFUWFhixGNG6s7tDsBP4ZZUoHD
 [DATABASE]
 engine = "postgresql"
 host = "0.0.0.0"
-port = 27017
-username = "root"
-password = "example"
+port = 5432
+username = "postgres"
+password = "postgres"
 database = "testdb"
+
 [VERSION]
-version = "0.2"
+version = "0.3"
 
 [MESSAGE]
 activity = "Watching A load of Game Developers"

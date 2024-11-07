@@ -1,9 +1,9 @@
 from sqlalchemy import BigInteger, ForeignKey, Column, Integer
 
 from sqlalchemy.orm import DeclarativeBase, relationship
-from sqlalchemy.ext.asyncio import AsyncAttrs
+#from sqlalchemy.ext.asyncio import AsyncAttrs
 
-import asyncio
+#import asyncio
 
 #Base = declarative_base()
 

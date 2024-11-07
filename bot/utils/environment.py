@@ -3,8 +3,8 @@ import tomllib
 from os import path
 from loguru import logger
 from pydantic import BaseModel
-from typing import TypedDict
-from requests import request
+#from typing import TypedDict
+#from requests import request
 import requests
 
 class DefaultConfig(BaseModel):
@@ -100,13 +100,36 @@ class Config:
 
 
             CurrentVersion=Config.config.VERSION.version
-            LatestVersion="0.0.1" # Ping github and look for latest version
             return CurrentVersion
+
+        @classmethod
+        def compareLatest(cls) -> str:
+            """Gets NateQK's Current version and compares to latest release"""
+
+
+            CurrentVersion=Config.config.VERSION.version
+            # TODO:
+            # Ping github Looking for latest version
+            # I'm working on getting a webserver setup
+            # using github pages so this is easy
+            LatestVersion=cls.latestVersion() # Ping github and look for latest version
+            if CurrentVersion != LatestVersion:
+                Response: str = f"""
+                Latest Version: {LatestVersion}
+                Current Version: {CurrentVersion}
+                """
+                return Response
+            else:
+                return CurrentVersion
 
         @classmethod
         def latestVersion(cls) -> str:
             """Gets NateQK's latest version"""
-            req: requests.Response = requests.get("https://nateqk.github.io/latest")
+            try:
+                req: requests.Response = requests.get("https://nateqk.github.io/latest")
+            except requests.HTTPError as e:
+                logger.error(f"Somethig went terribly wrong with your request to check latest bot version: {e}")
+                return f"{e}"
             logger.error(req.json())
             return 'this'
 
