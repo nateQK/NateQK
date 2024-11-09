@@ -6,9 +6,12 @@ from loguru import logger
 import requests
 from typing import Any
 from random import choice
+from asyncio import sleep
 
 plugin: arc.GatewayPlugin = arc.GatewayPlugin("Fun")
 version: str = "1.0"
+
+
 
 # NOTE: https://api.dictionaryapi.dev/api/v2/entries/en/
 # Funny Dictionary api
@@ -18,7 +21,6 @@ version: str = "1.0"
 @arc.slash_command("fun-version", "Get's current version of fun Extensions")
 async def funVersion(ctx: arc.GatewayContext):
   await ctx.respond(version, flags=hikari.MessageFlag.EPHEMERAL)
-
 
 #@plugin.include
 #@arc.slash_command("dictionary","Checks your word against a publicily available Dictionary, %100 unaltered")
@@ -36,13 +38,33 @@ async def dictionary(
 
 @plugin.include
 @arc.with_hook(arc.user_limiter(60, 5))
+@arc.slash_command("joke", "Fetches an arguably funny joke")
+async def joke_fetch(ctx: arc.GatewayContext):
+  req: requests.Response = requests.get("https://v2.jokeapi.dev/joke/Any?safe-mode")
+  reqData = req.json()
+  em: hikari.Embed = hikari.Embed(title="A Funny? joke")
+
+  if reqData["type"] == "twopart":
+    em.add_field("setup", reqData["setup"])
+    message = await ctx.respond(embed=em)
+    await sleep(2)
+    em.add_field("Delivery", reqData["delivery"])
+    await message.edit(embed=em)
+  if reqData["type"] == "single":
+    em.add_field("Joke", reqData["joke"])
+    await ctx.respond(embed=em)
+  return
+
+
+@plugin.include
+@arc.with_hook(arc.user_limiter(60, 5))
 @arc.slash_command('dog', "Show's an image of a cute dog")
 async def dog_fetch(ctx: arc.GatewayContext):
   req: requests.Response = requests.get("https://dog.ceo/api/breeds/image/random")
   reqData: Any = req.json()
 
   await ctx.respond(reqData["message"])
-
+  return
 
 
 
@@ -117,18 +139,10 @@ async def source(
 
 
 @plugin.include
-@arc.slash_command("dad", "Tells you a REAAALLLLY funny joke")
-async def dad_joke(ctx: arc.GatewayContext):
-  req: requests.Response = requests.get("")
-  req.json()
-
-
-@plugin.include
 @arc.slash_command("useless", "Gives you an Utterly useless fact to use in, no way shape or form later")
 async def useless_fact(ctx: arc.GatewayContext) -> None:
   req: requests.Response = requests.get("https://uselessfacts.jsph.pl/api/v2/facts/random")
   reqData: Any = req.json()
-
   await ctx.respond(reqData["text"])
 
 
