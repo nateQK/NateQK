@@ -9,7 +9,7 @@ from loguru import logger
 #from ..utils import configDB
 
 plugin: arc.GatewayPlugin = arc.GatewayPlugin("Ping")
-version: str = "1.0"
+version: float = 1.0
 
 
 

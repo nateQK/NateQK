@@ -10,7 +10,7 @@ from ..bot import client, BOT
 from ..utils import configVERSION
 
 plugin: arc.GatewayPlugin = arc.GatewayPlugin("Immutable")
-version: str = "1.0"
+version: float = 1.0
 
 activityTypes: dict[str, hikari.ActivityType] = {
     'Watching': hikari.ActivityType.WATCHING,

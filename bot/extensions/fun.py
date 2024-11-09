@@ -9,7 +9,7 @@ from random import choice
 from asyncio import sleep
 
 plugin: arc.GatewayPlugin = arc.GatewayPlugin("Fun")
-version: str = "1.0"
+version: float = 1.0
 
 
 
