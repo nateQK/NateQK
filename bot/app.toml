@@ -10,7 +10,10 @@ password = "postgres"
 database = "testdb"
 
 [VERSION]
-version = "0.4-dev"
+version = "0.4"
+major = 0
+minor = 4
+branch = "dev"
 
 [MESSAGE]
 activity = "Watching A load of Game Developers"
