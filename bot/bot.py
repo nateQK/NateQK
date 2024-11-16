@@ -13,7 +13,7 @@ from typing import Any
 
 from .utils import configBOT, configDB, configVERSION
 
-configDB.getHost() # NOTE: Herre to stop a pyright error
+configDB.getHost() # NOTE: Here to stop a pyright error
 
 BOT: hikari.GatewayBot = hikari.GatewayBot(
     token=configBOT.getToken(),
