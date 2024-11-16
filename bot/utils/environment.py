@@ -3,7 +3,7 @@ import tomllib
 from os import path
 from loguru import logger
 from pydantic import BaseModel
-#from typing import TypedDict
+from typing import Any
 #from requests import request
 import requests
 
@@ -23,6 +23,9 @@ class MessageConfig(BaseModel):
 
 class VersionConfig(BaseModel):
     version: str
+    major: int
+    minor: int
+    branch: str
 
 class Configuration(BaseModel):
     DEFAULT: DefaultConfig
@@ -99,7 +102,7 @@ class Config:
             """Gets NateQK's Current version and compares to latest release"""
 
 
-            CurrentVersion=Config.config.VERSION.version
+            CurrentVersion=Config.config.VERSION.version+"-"+Config.config.VERSION.branch
             return CurrentVersion
 
         @classmethod
@@ -107,7 +110,12 @@ class Config:
             """Gets NateQK's Current version and compares to latest release"""
 
 
-            CurrentVersion=Config.config.VERSION.version
+            CurrentMajor = Config.config.VERSION.major
+            CurrentMinor = Config.config.VERSION.minor
+            CurrentBranch = Config.config.VERSION.branch
+
+            CurrentVersion = f"{CurrentMajor}.{CurrentMinor}{CurrentBranch if CurrentBranch != 'dev' else ''}"
+
             # TODO:
             # Ping github Looking for latest version
             # I'm working on getting a webserver setup
@@ -126,11 +134,14 @@ class Config:
         def latestVersion(cls) -> str:
             """Gets NateQK's latest version"""
             try:
-                req: requests.Response = requests.get("https://nateqk.github.io/latest")
+                req: requests.Response = requests.get("https://nateqk.github.io/latest/latest.json")
+                reqjson: Any = req.json()
+
             except requests.HTTPError as e:
                 logger.error(f"Somethig went terribly wrong with your request to check latest bot version: {e}")
                 return f"{e}"
-            logger.error(req.json())
-            return 'this'
+
+            logger.debug(req.json())
+            return f"{reqjson['version']['major']}.{reqjson['version']['minor']}"
 
 
