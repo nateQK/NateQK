@@ -46,7 +46,7 @@ async def versions(ctx: arc.GatewayContext, /) -> None:
 
   versionEmbed.add_field(name="Current Version", value=current)
   if current != latest:
-    versionEmbed.colour = hikari.Color(int("ff0000"))
+    versionEmbed.colour = hikari.Color(int("ff0000", 16))
     versionEmbed.add_field(name="Latest Version", value=latest)
     if current[0] != latest[0]:
       # TODO:
