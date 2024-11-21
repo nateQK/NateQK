@@ -8,6 +8,9 @@ import psutil
 import platform
 from datetime import datetime
 
+import requests
+
+
 from ..bot import BOT
 
 
@@ -19,6 +22,19 @@ launchTime = datetime.now()
 def solveunit(input: int) -> Any:
     output: Any = ((input // 1024) // 1024) // 1024
     return int(output)
+
+
+@plugin.include
+@arc.with_hook(arc.user_limiter(360, 1))
+@arc.slash_command("stars","Shows the star history of blazium")
+async def stars(ctx: arc.GatewayContext):
+    #url = "https://api.star-history.com/svg?repos=blazium-engine/blazium&type=Timeline&theme=dark"
+    #response = requests.get(url)
+    #if not response.status_code == 200:
+        #logger.error(response)
+        #await ctx.respond("Failed to get svg image")
+    await ctx.respond("Coming Soon!")
+
 
 
 @plugin.include
