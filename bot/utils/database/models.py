@@ -11,6 +11,8 @@ class ServerSettings(Base):
     guildID = Column(BigInteger, primary_key=True, unique=True)
     serverJoin = Column(Integer, autoincrement=True)
     ownerID = Column(Integer)
+    userAmount = Column(Integer)
+    economy = Column(Integer) # NOTE: How much money is in the economy currently
 
     views = relationship("Views", back_populates="server")
 
@@ -24,4 +26,10 @@ class Views(Base):
     server = relationship("ServerSettings", back_populates="views")
 
 
+class Users(Base):
+    __tablename__ = "Users"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    uid = Column(Integer, unique=True)
+    worth = Column(Integer)
 
