@@ -5,7 +5,7 @@ from ..bot import BOT
 from loguru import logger
 import requests
 from typing import Any
-from random import choice
+from random import choice, randint
 from asyncio import sleep
 
 plugin: arc.GatewayPlugin = arc.GatewayPlugin("Fun")
@@ -35,6 +35,19 @@ async def dictionary(
   await ctx.respond(req.json())
 
 
+@plugin.include
+@arc.slash_command("coin", "Flips a coin")
+async def coin(ctx: arc.GatewayContext):
+  nums:list[int] = []
+  for _ in range(10):
+    nums.append(randint(1, 1000))
+
+  mychoice = choice(nums)
+  if mychoice % 2 == 0:
+    await ctx.respond("Heads")
+  else:
+    await ctx.respond("Tails")
+
 
 @plugin.include
 @arc.with_hook(arc.user_limiter(60, 5))
@@ -50,6 +63,7 @@ async def joke_fetch(ctx: arc.GatewayContext):
     await sleep(2)
     em.add_field("Delivery", reqData["delivery"])
     await message.edit(embed=em)
+
   if reqData["type"] == "single":
     em.add_field("Joke", reqData["joke"])
     await ctx.respond(embed=em)
