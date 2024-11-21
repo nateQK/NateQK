@@ -1,11 +1,12 @@
 '''Config and Other globablly usable variables module.'''
 import tomllib
-from os import path
+from os import path, environ, getenv
 from loguru import logger
 from pydantic import BaseModel
 from typing import Any
-#from requests import request
 import requests
+import os
+from dotenv import load_dotenv
 
 class DefaultConfig(BaseModel):
     token: str
@@ -37,15 +38,38 @@ class Configuration(BaseModel):
 
 class Config:
     config: Configuration
-
     @classmethod
     def loadConfig(cls) -> None:
         """Loads, Fetches, and Validates config from a pre-determined file"""
+        load_dotenv()
+        config: dict[str, Any] = {
+            'DEFAULT': 
+                {'token': os.getenv("token")
+                 },
+            'DATABASE': 
+                {'engine': os.getenv("engine"),
+                'host': os.getenv("host"),
+                'port': os.getenv("port"),
+                'username': os.getenv("username"),
+                'password': os.getenv("password"),
+                'database': os.getenv("database")
+                 }, 
+            'VERSION': 
+                {'version': os.getenv("version"),
+                 'major': os.getenv("major"),
+                 'minor': os.getenv("minor"),
+                 'branch': os.getenv("branch")
+                 },
+            'MESSAGE': 
+                {'activity': os.getenv("activity")}
+        }
 
-        configfile: str = path.join("bot", "app.toml")
 
-        with open(configfile, 'rb') as file:
-            config = tomllib.load(file)
+        #configfile: str = path.join("bot", "app.toml")
+
+        #with open(configfile, 'rb') as file:
+            #config = tomllib.load(file)
+            #logger.error(config)
         cls.config = Configuration(**config)
 
 
