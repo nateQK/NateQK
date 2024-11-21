@@ -1,8 +1,5 @@
-FROM python:3.13-alpine
-
-# Copy application files
-COPY . /app
-WORKDIR /app
+# Stage 1: Build
+FROM python:3.13-alpine AS builder
 
 # Install build dependencies and Inkscape
 RUN apk add --no-cache \
@@ -11,9 +8,21 @@ RUN apk add --no-cache \
 	python3-dev \
 	linux-headers
 
-# Install Python dependencies
+# Copy application files and install Python dependencies
+COPY . /app
+WORKDIR /app
 RUN pip install --upgrade pip
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt --target=/app/dependencies
+
+# Stage 2: Final Image
+FROM python:3.13-alpine
+
+# Install runtime dependencies
+RUN apk add --no-cache bash
+
+# Copy application and dependencies
+COPY --from=builder /app /app
+WORKDIR /app
 
 # Create a non-root user and switch to it
 RUN adduser -D app
