@@ -24,6 +24,7 @@ async def funVersion(ctx: arc.GatewayContext):
 
 #@plugin.include
 #@arc.slash_command("dictionary","Checks your word against a publicily available Dictionary, %100 unaltered")
+
 async def dictionary(
   ctx: arc.GatewayContext,
   word: arc.Option[str, arc.StrParams()]
@@ -130,15 +131,6 @@ async def source(
     "Why tf would you ask me?",
     "Maybe",
     "Bruh, ask again",
-    "Ask Trump bro",
-    "Trump says no bro",
-    "Trump says yes bro",
-    "Ask Kamala bro",
-    "Kamala says yes bro",
-    "Kamala says no bro",
-    "Not A Trump Supporter? Try Asking Kamala",
-    "Not A Kamala Supporter? Try Asking Trump",
-    "Kamala Failed, hmm. don't try biden",
     "This command gonna get me cancelled. but no to your question",
     "This was written by a monkey, wasn't it...",
     f"You know, I see {members-1} Others that can answer that question",
@@ -159,6 +151,21 @@ async def useless_fact(ctx: arc.GatewayContext) -> None:
   reqData: Any = req.json()
   await ctx.respond(reqData["text"])
 
+
+@plugin.include
+@arc.slash_command("dice", "Roll A dice")
+async def dice(
+  ctx: arc.GatewayContext,
+  sides: arc.Option[int, arc.IntParams(max=9999, min=2)] = 2,
+  amount: arc.Option[int, arc.IntParams(max=25, min=1)] = 1
+  ) -> None:
+
+  _rollembed: hikari.Embed = hikari.Embed(title="Dice")
+
+  #for _ in range(amount):
+  roll = randint(0, sides)
+
+  await ctx.respond(roll)
 
 
 
