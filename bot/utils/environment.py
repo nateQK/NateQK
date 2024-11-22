@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 
 class DefaultConfig(BaseModel):
     token: str
+    botpfp: str
 
 class DatabaseConfig(BaseModel):
     engine: str
@@ -28,6 +29,7 @@ class VersionConfig(BaseModel):
     minor: int
     branch: str
 
+
 class Configuration(BaseModel):
     DEFAULT: DefaultConfig
     DATABASE: DatabaseConfig
@@ -44,7 +46,8 @@ class Config:
         load_dotenv()
         config: dict[str, Any] = {
             'DEFAULT': 
-                {'token': os.getenv("token")
+                {'token': os.getenv("token"),
+                 'botpfp': "https://github.com/blazium-engine/blazium-assets/blob/main/Discord/Community_Bot/logo_dragon_no_background.png?raw=true"
                  },
             'DATABASE': 
                 {'engine': os.getenv("engine"),
@@ -54,22 +57,19 @@ class Config:
                 'password': os.getenv("password"),
                 'database': os.getenv("database")
                  }, 
-            'VERSION': 
-                {'version': os.getenv("version"),
-                 'major': os.getenv("major"),
-                 'minor': os.getenv("minor"),
-                 'branch': os.getenv("branch")
-                 },
             'MESSAGE': 
                 {'activity': os.getenv("activity")}
         }
 
 
-        #configfile: str = path.join("bot", "app.toml")
+        configfile: str = path.join("bot", "app.toml")
 
-        #with open(configfile, 'rb') as file:
-            #config = tomllib.load(file)
-            #logger.error(config)
+        with open(configfile, 'rb') as file:
+            fileconfig = tomllib.load(file)
+
+        for x in fileconfig.values():
+            config["VERSION"] = x
+
         cls.config = Configuration(**config)
 
 
@@ -118,6 +118,10 @@ class Config:
             """Gets bot token from config"""
             return Config.config.DEFAULT.token
 
+        @classmethod
+        def getBotPFP(cls) -> str:
+            """Gets bot token from config"""
+            return Config.config.DEFAULT.botpfp
 
     class Version:
 
