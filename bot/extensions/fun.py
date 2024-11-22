@@ -8,6 +8,8 @@ from typing import Any
 from random import choice, randint
 from asyncio import sleep
 
+from ..utils import configBOT
+
 plugin: arc.GatewayPlugin = arc.GatewayPlugin("Fun")
 version: float = 1.0
 
@@ -156,17 +158,18 @@ async def useless_fact(ctx: arc.GatewayContext) -> None:
 @arc.slash_command("dice", "Roll A dice")
 async def dice(
   ctx: arc.GatewayContext,
-  sides: arc.Option[int, arc.IntParams(max=9999, min=2)] = 2,
+  sides: arc.Option[int, arc.IntParams(max=9999, min=2)] = 6,
   amount: arc.Option[int, arc.IntParams(max=25, min=1)] = 1
   ) -> None:
 
-  _rollembed: hikari.Embed = hikari.Embed(title="Dice")
+    rollembed: hikari.Embed = hikari.Embed(title=f"Die {sides}", color="#ff0000", )
 
-  #for _ in range(amount):
-  roll = randint(0, sides)
 
-  await ctx.respond(roll)
+    for _ in range(amount):
+        rollembed.add_field(f"d{_}", str(randint(1, sides)), inline=True)
+    rollembed.set_author(name="NaterBot", icon=str(configBOT.getBotPFP()))
 
+    await ctx.respond(embed=rollembed)
 
 
 
