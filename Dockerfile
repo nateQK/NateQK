@@ -28,9 +28,8 @@ WORKDIR /app
 RUN adduser -D app
 USER app
 
-# Expose application port
-EXPOSE 8080
-
+# Enter the Environment
+ENV PYTHONPATH=/app/dependencies
 # Command to run the application
 CMD ["bash", "/app/run.sh"]
 
