@@ -17,8 +17,8 @@ configDB.getHost() # NOTE: Here to stop a pyright error
 
 BOT: hikari.GatewayBot = hikari.GatewayBot(
     token=configBOT.getToken(),
-    banner=None, 
-    intents=hikari.Intents.ALL
+    banner=None,
+    intents=hikari.Intents.ALL,
 )
 
 client: arc.GatewayClient = arc.GatewayClient(BOT)

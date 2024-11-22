@@ -6,7 +6,6 @@ from ..bot import BOT
 
 from loguru import logger
 
-from random import randint
 from ..utils import configBOT
 
 plugin: arc.GatewayPlugin = arc.GatewayPlugin("Ping")

@@ -2,14 +2,12 @@ import hikari
 import miru
 import arc
 from typing import Any
-
 from loguru import logger
 import psutil
 import platform
 from datetime import datetime
 
 import requests
-
 
 from ..bot import BOT
 
@@ -28,11 +26,14 @@ def solveunit(input: int) -> Any:
 @arc.with_hook(arc.user_limiter(360, 1))
 @arc.slash_command("stars","Shows the star history of blazium")
 async def stars(ctx: arc.GatewayContext):
-    #url = "https://api.star-history.com/svg?repos=blazium-engine/blazium&type=Timeline&theme=dark"
-    #response = requests.get(url)
-    #if not response.status_code == 200:
-        #logger.error(response)
-        #await ctx.respond("Failed to get svg image")
+    url = "https://api.star-history.com/svg?repos=blazium-engine/blazium&type=Timeline&theme=dark"
+    response = requests.get(url)
+    #logger.error(response.content)
+    if not response.status_code == 200:
+        logger.error(response)
+        await ctx.respond("Failed to get Star Histroy Image")
+    #pyvips.Image.svgload_buffer()
+
     await ctx.respond("Coming Soon!")
 
 

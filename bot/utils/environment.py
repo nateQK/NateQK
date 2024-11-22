@@ -1,6 +1,6 @@
 '''Config and Other globablly usable variables module.'''
 import tomllib
-from os import path, environ, getenv
+from os import path
 from loguru import logger
 from pydantic import BaseModel
 from typing import Any
