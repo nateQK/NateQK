@@ -7,7 +7,7 @@ import arc
 from typing import Any
 
 from ..bot import client, BOT
-from ..utils import configVERSION
+from ..utils import configVERSION, configMESSAGE
 
 plugin: arc.GatewayPlugin = arc.GatewayPlugin("Immutable")
 version: float = 1.0
@@ -32,7 +32,7 @@ statusTypes: dict[str, hikari.Status] = {
 async def set_presence(event: arc.StartedEvent[Any], /) -> None:
   await BOT.update_presence(
     status=hikari.Status.ONLINE,
-    activity=hikari.Activity(name=f'A Game Engine Community', type=hikari.ActivityType.WATCHING)
+    activity=hikari.Activity(name=f'{configMESSAGE.getActivity()}', type=hikari.ActivityType.WATCHING)
     )
 
 
