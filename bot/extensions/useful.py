@@ -7,13 +7,14 @@ import requests
 from pydantic import BaseModel as base
 from pydantic import Field
 #from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from typing import Any
 
 
 class reactionsDict(base):
   url: str
   total_count: int
-  plus1: int = Field(alias="+1")
-  minus1: int = Field(alias="-1")
+  plus1: Any = Field(alias="+1")
+  minus1: Any = Field(alias="-1")
   laugh: int
   hooray: int
   confused: int
