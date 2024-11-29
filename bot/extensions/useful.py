@@ -13,8 +13,8 @@ from typing import Any
 class reactionsDict(base):
   url: str
   total_count: int
-  plus1: Any = Field(alias="+1")
-  minus1: Any = Field(alias="-1")
+  plus1: Any = Field(alias="+1", description="idk man") # type: ignore
+  minus1: Any = Field(alias="-1", description="idk man") # type: ignore
   laugh: int
   hooray: int
   confused: int
@@ -107,7 +107,7 @@ async def steal_time(time:str) -> datetime:
 
 @plugin.include
 @arc.slash_command("issues", "Cycle Through Github issues in the github")
-async def issues(ctx: arc.GatewayContext):
+async def issues(ctx: arc.GatewayContext) -> None:
   headers: dict[str, str] = {
     "accept": "application/vnd.github.raw+json"
   }
@@ -131,7 +131,7 @@ async def issues(ctx: arc.GatewayContext):
 
 @plugin.include
 @arc.slash_command("links","Responds with a link to all the stores blazium is on!")
-async def links(ctx: arc.GatewayContext):
+async def links(ctx: arc.GatewayContext) -> None:
   em: hikari.Embed = hikari.Embed(title="Blazium Store Pages")
   # TODO: Replace hardcoded links with links put into the database through a command
   # It should be done in such a way that it's not inconveinent or slow,
