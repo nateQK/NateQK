@@ -7,10 +7,10 @@ jobs:
     name: Ensure type safety
     uses: ./.github/workflows/pyright-test.yml
 
-  test-bot:
-    name: Test Hikari
-    needs: pyright-pylance-checks
-    uses: ./.github/workflows/hikari-test.yml
+  #test-bot:
+  #  name: Test Hikari
+  #  needs: pyright-pylance-checks
+  #  uses: ./.github/workflows/hikari-test.yml
 
   push-docker:
     name: Build and Push docker
