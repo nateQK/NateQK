@@ -60,7 +60,7 @@ class Config:
                 {'engine': os.getenv("ENGINE"),
                 'host': os.getenv("HOST"),
                 'port': os.getenv("PORT"),
-                'username': os.getenv("USERNAME"),
+                'username': os.getenv("DBUSERNAME"),
                 'password': os.getenv("PASSWORD"),
                 'database': os.getenv("DATABASE")
                  },
@@ -75,6 +75,14 @@ class Config:
                 {'activity': os.getenv("ACTIVITY")}
         }
 
+
+        configfile: str = path.join("bot", "app.toml")
+
+        with open(configfile, 'rb') as file:
+            fileconfig = tomllib.load(file)
+
+        for x in fileconfig.values():
+            config["VERSION"] = x
 
         cls.config = Configuration(**config)
 
