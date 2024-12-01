@@ -20,6 +20,12 @@ class DatabaseConfig(BaseModel):
     password: str
     database: str
 
+class GitConfig(BaseModel):
+    repo: str
+    branch: str
+    directory: str
+    localdir: str
+
 class MessageConfig(BaseModel):
     activity: str
 
@@ -33,6 +39,7 @@ class VersionConfig(BaseModel):
 class Configuration(BaseModel):
     DEFAULT: DefaultConfig
     DATABASE: DatabaseConfig
+    GIT: GitConfig
     MESSAGE: MessageConfig
     VERSION: VersionConfig
 
@@ -46,19 +53,26 @@ class Config:
         load_dotenv()
         config: dict[str, Any] = {
             'DEFAULT': 
-                {'token': os.getenv("token"),
-                 'botpfp': os.getenv("botpfp")
+                {'token': os.getenv("TOKEN"),
+                 'botpfp': os.getenv("BOTPFP")
                  },
             'DATABASE': 
-                {'engine': os.getenv("engine"),
-                'host': os.getenv("host"),
-                'port': os.getenv("port"),
-                'username': os.getenv("username"),
-                'password': os.getenv("password"),
-                'database': os.getenv("database")
-                 }, 
+                {'engine': os.getenv("ENGINE"),
+                'host': os.getenv("HOST"),
+                'port': os.getenv("PORT"),
+                'username': os.getenv("USERNAME"),
+                'password': os.getenv("PASSWORD"),
+                'database': os.getenv("DATABASE")
+                 },
+            'GIT':
+                {'repo': os.getenv("REPO"),
+                 'branch': os.getenv("BRANCH"),
+                 'directory': os.getenv("DIRECTORY"),
+                 'localdir': './classes'
+
+                },
             'MESSAGE': 
-                {'activity': os.getenv("activity")}
+                {'activity': os.getenv("ACTIVITY")}
         }
 
 
@@ -97,6 +111,27 @@ class Config:
         def getDatabase(cls) -> str:
             """Fetches values of Database.database from config"""
             return Config.config.DATABASE.database
+
+    class Git:
+        @classmethod
+        def getRepo(cls) -> str:
+            """Fetches value of GIT.repo from config"""
+            return Config.config.GIT.repo
+
+        @classmethod
+        def getBranch(cls) -> str:
+            """Get's what branch to download from in the git-repo"""
+            return Config.config.GIT.branch
+
+
+        @classmethod
+        def getDirectory(cls) -> str:
+            """Get's path in the git-repo of what folder to download"""
+            return Config.config.GIT.directory
+
+        @classmethod
+        def getLocalDir(cls) -> str:
+            return Config.config.GIT.localdir
 
     class Message:
         @classmethod
