@@ -47,7 +47,7 @@ class Config:
         config: dict[str, Any] = {
             'DEFAULT': 
                 {'token': os.getenv("token"),
-                 'botpfp': "https://github.com/blazium-engine/blazium-assets/blob/main/Discord/Community_Bot/logo_dragon_no_background.png?raw=true"
+                 'botpfp': os.getenv("botpfp")
                  },
             'DATABASE': 
                 {'engine': os.getenv("engine"),
@@ -61,14 +61,6 @@ class Config:
                 {'activity': os.getenv("activity")}
         }
 
-
-        configfile: str = path.join("bot", "app.toml")
-
-        with open(configfile, 'rb') as file:
-            fileconfig = tomllib.load(file)
-
-        for x in fileconfig.values():
-            config["VERSION"] = x
 
         cls.config = Configuration(**config)
 
