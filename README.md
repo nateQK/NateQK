@@ -16,20 +16,9 @@ A few **need** to be completed things before 1.0 release
 > we will have a webpage with the latest version on it and maybe a few other details in json form
 > This will be important as it will allow us to tell the user when their bot is out of date
 
-> [!NOTE]
-> Unless we get paid to do so, we will not maintain old versions of the bot
-> We will use renovate to provide security updates though
->
-> This also Applies to extensions,
-> Some extensions might stop recieving updates, or we might not add the features some people want.
-> Depending on the general use of the plugin and it's performance
-
 - [ ] Full suite of commands
   - [x] Purge
   - [x] Ping
-  - [ ] Ban
-  - [ ] Unban
-  - [ ] Kick
   - [ ] Channel Lock(Locks a channel so that only users with a certain role or above a certain role can talk in it)
   - [ ] Channel Un-Lock
   - [ ] Warn(Warn's a user adding a warning tick to the user in the db)
