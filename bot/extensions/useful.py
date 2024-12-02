@@ -2,10 +2,12 @@ import hikari
 import arc
 from loguru import logger
 from datetime import datetime
-from ..utils import configBOT
+from ..utils import configBOT, configGIT
+from ..utils.github import download_directory, update_directory
 import requests
 from pydantic import BaseModel as base
 from pydantic import Field
+from os import path
 #from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from typing import Any
 
@@ -13,8 +15,8 @@ from typing import Any
 class reactionsDict(base):
   url: str
   total_count: int
-  plus1: Any = Field(alias="+1", description="idk man") # type: ignore
-  minus1: Any = Field(alias="-1", description="idk man") # type: ignore
+  plus1: Any = Field(alias="+1")
+  minus1: Any = Field(alias="-1")
   laugh: int
   hooray: int
   confused: int
@@ -55,7 +57,7 @@ class userDict(base):
 class internalIssues(base):
   url: str
   repository_url: str
-  labels_url: str
+  labels_url: str | None
   comments_url: str
   events_url: str
   html_url: str
@@ -64,7 +66,7 @@ class internalIssues(base):
   number: int
   title: str
   user: userDict
-  labels: list[str]
+  labels: list[str] | None
   state: str
   locked: bool
   assignee: str | None
@@ -78,15 +80,12 @@ class internalIssues(base):
   active_lock_reason: str | None
   draft: bool
   pull_request: prDict
-  body: str
+  body: str | None
   closed_by: str | None
   reactions: reactionsDict
   timeline_url: str
   performed_via_github_app: str | None
   state_reason: str | None = None
-
-
-
 
 
 
@@ -120,11 +119,14 @@ async def issues(ctx: arc.GatewayContext) -> None:
   else:
     await ctx.respond(f"An error has occured, We got a status code of {response.status_code} ping Naterfute and Bioblaze Payne")
     return
-
+  issue: internalIssues
   issues: internalIssues = internalIssues(**response.json()[0])
-  print(issues.id)
+
+  for issue in response.json():
+    issue = internalIssues(**issue) # type: ignore
+  await ctx.respond(issues.html_url)
   #logger.error(issues)
-  
+
 
 
 
@@ -140,6 +142,7 @@ async def links(ctx: arc.GatewayContext) -> None:
   # Ask the following questions
   # - Title
   # - Description
+  # When Submitted We put a new entry in the database with this info, probably a new table
 
   em.set_author(name="NaterBot", icon=str(configBOT.getBotPFP()))
   em.add_field("Github", "https://github.com/blazium-engine/blazium/releases")
@@ -148,6 +151,23 @@ async def links(ctx: arc.GatewayContext) -> None:
   em.set_footer("Blazium Community Bot", icon=str(configBOT.getBotPFP()))
   await ctx.respond(embed=em)
 
+
+@plugin.include
+@arc.with_hook(arc.guild_only)
+@arc.with_hook(arc.has_permissions(hikari.Permissions.ADMINISTRATOR))
+@arc.slash_command("updateclasses", "This command will auto-run Every hour on the hour")
+async def updateBlaziumClasses(ctx: arc.GatewayContext) -> None:
+  job: int
+  if not path.exists(configGIT.getLocalDir()):
+    job = download_directory(configGIT.getRepo())
+
+  else:
+    job = update_directory()
+  
+  if job == 1:
+    await ctx.respond("Successfully updated/downloaded files")
+  elif job == 0:
+    await ctx.respond("An error occured when updating files. Check logs and contact <@358720980669038592>")
 
 
 #@plugin.include
