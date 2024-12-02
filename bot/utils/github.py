@@ -1,3 +1,4 @@
+# pyright: reportMissingImports=false, reportUnusedVariable=false
 """
 bot.utils.github.py
 Bad Programming, this file only has some github interactions"""
