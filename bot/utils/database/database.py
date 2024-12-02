@@ -26,7 +26,7 @@ class DBTypes():
     postgresql: DBInfo = {"database": "postgresql", "driver": "asyncpg"}
     mysql: DBInfo = {"database": "mysql", "driver": "aiomysql"}
     mariadb: DBInfo = {"database": "mysql", "driver": "aiomysql"}
-    #sqlite: DBInfo = {"database": "sqlite", "driver": "aiosqlite"} # NOTE: I'm not implementing this logic rn. not enough time
+    #sqlite: DBInfo = {"database": "sqlite", "driver": "aiosqlite"} # TODO: Implement logic that allows for sqlite to be used properly
 
 
 
@@ -40,13 +40,13 @@ class Database:
     async def connect(cls) -> AsyncEngine:
         try:
             cls.engineType = getattr(DBTypes, configDB.getEngine())
-           # logger.debug(f"""
-           #             Username: {configDB.getUsername()}
-           #             Password: {configDB.getPassword()}
-           #             Host: {configDB.getHost()}
-           #             Database: {configDB.getDatabase()}
-           #             Engine Info: {cls.engineType}
-           #     """)
+            logger.debug(f"""
+                        Username: {configDB.getUsername()}
+                        Password: {configDB.getPassword()}
+                        Host: {configDB.getHost()}
+                        Database: {configDB.getDatabase()}
+                        Engine Info: {cls.engineType}
+                """)
             cls.engine = create_async_engine(
                 f"{cls.engineType['database']}+{cls.engineType['driver']}://{configDB.getUsername()}:{configDB.getPassword()}@{configDB.getHost()}/{configDB.getDatabase()}",
                 pool_size=20,
