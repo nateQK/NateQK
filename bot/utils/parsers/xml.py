@@ -20,12 +20,12 @@ class xmlParser:
             url:str = link.text.strip()# type: ignore
             url:str = url.replace("$DOCS_URL", "https://docs.blazium.app")# type: ignore
             tutorials.append({"title": title, "url": url})
-
+        
 
         returnData: dict[str, Any] = {
             "name": root['name'],# type: ignore
             "inherits": root['inherits'],# type: ignore
-            "description": root.find("description"),# type: ignore
+            "description": root.find("description").text.strip(),# type: ignore
             "brief_desc": root.find('brief_desciprtion'),# type: ignore
             "tutorials": tutorials,
         }

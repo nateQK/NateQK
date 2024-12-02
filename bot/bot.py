@@ -11,7 +11,7 @@ from os import path
 from sys import stderr
 from loguru import logger
 from typing import Any
-
+from .utils.github import files
 from .utils import configBOT, configVERSION, hourlyTasks
 
 def debug_init(trace: bool = False, debug: bool = False):
@@ -50,6 +50,7 @@ client.load_extensions_from(path.join("bot", "extensions"))
 @client.listen()
 async def on_startup(event: arc.StartedEvent[Any]) -> None:
     #print("[=] STARTED")
+    files.getFiles()
     from apscheduler.schedulers.asyncio import AsyncIOScheduler # type: ignore
     scheduler = AsyncIOScheduler()
     scheduler.add_job(hourlyTasks, 'cron', minute=0) # type: ignore

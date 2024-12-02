@@ -2,12 +2,23 @@
 bot.utils.github.py
 Bad Programming, this file only has some github interactions"""
 import os
+from os import listdir
 from git import Repo
 from loguru import logger
 
 
 repo_url = "https://github.com/blazium-engine/blazium.git"
 local_dir = os.path.join("blazium")
+
+class files():
+
+    @classmethod
+    def getFiles(cls) -> dict[str, str]:
+        fileStruct: dict[str, str] = {}
+        for file in listdir("blazium/doc/classes"):
+            fileStruct[f"{file.lower()}"] = file
+        cls.nodes = fileStruct
+        return fileStruct
 
 
 def download_directory(repo_url: str, local_dir: str=os.path.join("blazium")) -> int:
@@ -34,6 +45,7 @@ def download_directory(repo_url: str, local_dir: str=os.path.join("blazium")) ->
         return 0
     finally:
         logger.success("Successfully Downloaded git ")
+        files.getFiles()
         return 1
 
 def update_directory(local_dir: str=os.path.join("blazium")) -> int:
@@ -48,6 +60,7 @@ def update_directory(local_dir: str=os.path.join("blazium")) -> int:
         repo = Repo(local_dir)
 
         repo.git.pull()
+        files.getFiles()
         return 1
     except Exception as e:
         logger.error(f"An Error Occured when updating repo {e}")
