@@ -22,9 +22,7 @@ class DatabaseConfig(BaseModel):
 
 class GitConfig(BaseModel):
     repo: str
-    branch: str
-    directory: str
-    localdir: str
+    localdir: str = "blazium"
 
 class MessageConfig(BaseModel):
     activity: str
@@ -65,10 +63,8 @@ class Config:
                 'database': os.getenv("DATABASE")
                  },
             'GIT':
-                {'repo': os.getenv("REPO"),
-                 'branch': os.getenv("BRANCH"),
-                 'directory': os.getenv("DIRECTORY"),
-                 'localdir': './classes'
+                {'repo': os.getenv("REPO_URL"),
+                 'localdir': "blazium"
 
                 },
             'MESSAGE': 
@@ -127,18 +123,8 @@ class Config:
             return Config.config.GIT.repo
 
         @classmethod
-        def getBranch(cls) -> str:
-            """Get's what branch to download from in the git-repo"""
-            return Config.config.GIT.branch
-
-
-        @classmethod
-        def getDirectory(cls) -> str:
-            """Get's path in the git-repo of what folder to download"""
-            return Config.config.GIT.directory
-
-        @classmethod
         def getLocalDir(cls) -> str:
+            """Fetches value of GIT.localdir from config"""
             return Config.config.GIT.localdir
 
     class Message:
