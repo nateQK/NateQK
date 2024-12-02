@@ -1,7 +1,7 @@
 from alembic.config import Config
 from alembic import command
 from .. import configDB as config
-from loguru import logger
+#from loguru import logger
 
 
 
