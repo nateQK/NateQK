@@ -5,10 +5,15 @@ from ..bot import BOT
 from loguru import logger
 import requests
 from typing import Any
-from random import choice
+from random import choice, randint
+from asyncio import sleep
+
+from ..utils import configBOT
 
 plugin: arc.GatewayPlugin = arc.GatewayPlugin("Fun")
-version: str = "1.0"
+version: float = 1.0
+
+
 
 # NOTE: https://api.dictionaryapi.dev/api/v2/entries/en/
 # Funny Dictionary api
@@ -19,9 +24,9 @@ version: str = "1.0"
 async def funVersion(ctx: arc.GatewayContext):
   await ctx.respond(version, flags=hikari.MessageFlag.EPHEMERAL)
 
-
 #@plugin.include
 #@arc.slash_command("dictionary","Checks your word against a publicily available Dictionary, %100 unaltered")
+
 async def dictionary(
   ctx: arc.GatewayContext,
   word: arc.Option[str, arc.StrParams()]
@@ -33,6 +38,40 @@ async def dictionary(
   await ctx.respond(req.json())
 
 
+@plugin.include
+@arc.slash_command("coin", "Flips a coin")
+async def coin(ctx: arc.GatewayContext):
+  nums:list[int] = []
+  for _ in range(10):
+    nums.append(randint(1, 1000))
+
+  mychoice = choice(nums)
+  if mychoice % 2 == 0:
+    await ctx.respond("Heads")
+  else:
+    await ctx.respond("Tails")
+
+
+@plugin.include
+@arc.with_hook(arc.user_limiter(60, 5))
+@arc.slash_command("joke", "Fetches an arguably funny joke")
+async def joke_fetch(ctx: arc.GatewayContext):
+  req: requests.Response = requests.get("https://v2.jokeapi.dev/joke/Any?safe-mode")
+  reqData = req.json()
+  em: hikari.Embed = hikari.Embed(title="A Funny? joke")
+
+  if reqData["type"] == "twopart":
+    em.add_field("setup", reqData["setup"])
+    message = await ctx.respond(embed=em)
+    await sleep(2)
+    em.add_field("Delivery", reqData["delivery"])
+    await message.edit(embed=em)
+
+  if reqData["type"] == "single":
+    em.add_field("Joke", reqData["joke"])
+    await ctx.respond(embed=em)
+  return
+
 
 @plugin.include
 @arc.with_hook(arc.user_limiter(60, 5))
@@ -42,7 +81,7 @@ async def dog_fetch(ctx: arc.GatewayContext):
   reqData: Any = req.json()
 
   await ctx.respond(reqData["message"])
-
+  return
 
 
 
@@ -94,15 +133,6 @@ async def source(
     "Why tf would you ask me?",
     "Maybe",
     "Bruh, ask again",
-    "Ask Trump bro",
-    "Trump says no bro",
-    "Trump says yes bro",
-    "Ask Kamala bro",
-    "Kamala says yes bro",
-    "Kamala says no bro",
-    "Not A Trump Supporter? Try Asking Kamala",
-    "Not A Kamala Supporter? Try Asking Trump",
-    "Kamala Failed, hmm. don't try biden",
     "This command gonna get me cancelled. but no to your question",
     "This was written by a monkey, wasn't it...",
     f"You know, I see {members-1} Others that can answer that question",
@@ -117,21 +147,29 @@ async def source(
 
 
 @plugin.include
-@arc.slash_command("dad", "Tells you a REAAALLLLY funny joke")
-async def dad_joke(ctx: arc.GatewayContext):
-  req: requests.Response = requests.get("")
-  req.json()
-
-
-@plugin.include
 @arc.slash_command("useless", "Gives you an Utterly useless fact to use in, no way shape or form later")
 async def useless_fact(ctx: arc.GatewayContext) -> None:
   req: requests.Response = requests.get("https://uselessfacts.jsph.pl/api/v2/facts/random")
   reqData: Any = req.json()
-
   await ctx.respond(reqData["text"])
 
 
+@plugin.include
+@arc.slash_command("dice", "Roll A dice")
+async def dice(
+  ctx: arc.GatewayContext,
+  sides: arc.Option[int, arc.IntParams(max=9999, min=2)] = 6,
+  amount: arc.Option[int, arc.IntParams(max=25, min=1)] = 1
+  ) -> None:
+
+    rollembed: hikari.Embed = hikari.Embed(title=f"Die {sides}", color="#ff0000", )
+
+
+    for _ in range(amount):
+        rollembed.add_field(f"d{_}", str(randint(1, sides)), inline=True)
+    rollembed.set_author(name="NaterBot", icon=str(configBOT.getBotPFP()))
+
+    await ctx.respond(embed=rollembed)
 
 
 

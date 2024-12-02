@@ -2,18 +2,18 @@ import hikari
 import miru
 import arc
 from typing import Any
-
 from loguru import logger
 import psutil
 import platform
 from datetime import datetime
 
+import requests
+
 from ..bot import BOT
 
-#from ..utils import configDB
 
 plugin: arc.GatewayPlugin = arc.GatewayPlugin("Stats")
-version: str = "1.0"
+version: float = 1.0
 
 launchTime = datetime.now()
 
@@ -23,6 +23,23 @@ def solveunit(input: int) -> Any:
 
 
 @plugin.include
+@arc.with_hook(arc.user_limiter(360, 1))
+@arc.slash_command("stars","Shows the star history of blazium")
+async def stars(ctx: arc.GatewayContext):
+    url = "https://api.star-history.com/svg?repos=blazium-engine/blazium&type=Timeline&theme=dark"
+    response = requests.get(url)
+    #logger.error(response.content)
+    if not response.status_code == 200:
+        logger.error(response)
+        await ctx.respond("Failed to get Star Histroy Image")
+    #pyvips.Image.svgload_buffer()
+
+    await ctx.respond("Coming Soon!")
+
+
+
+@plugin.include
+@arc.with_hook(arc.user_limiter(360, 5))
 @arc.slash_command("stats", "Get's info about the system hardware")
 async def stats(ctx: arc.GatewayContext):
 
@@ -36,7 +53,7 @@ async def stats(ctx: arc.GatewayContext):
             ).memory_full_info().uss / 1024 ** 2
         )
     except AttributeError:
-        # OS doesn't support retrieval of USS (probably BSD or Solaris)
+        # NOTE: OS doesn't support retrieval of USS (probably BSD or Solaris)
         mem_usage = "{:.2f} MiB".format(
             __import__("psutil").Process(
             ).memory_full_info().rss / 1024 ** 2

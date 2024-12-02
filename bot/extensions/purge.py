@@ -7,7 +7,7 @@ from loguru import logger
 
 from ..bot import BOT
 plugin: arc.GatewayPlugin = arc.GatewayPlugin("Purge")
-version: str = "1.0"
+version: float = 1.0
 
 
 

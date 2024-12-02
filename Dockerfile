@@ -1,21 +1,35 @@
-FROM python:3.12-slim
+# Stage 1: Build
+FROM python:3.13-alpine AS builder
 
+# Install build dependencies and Inkscape
+RUN apk add --no-cache \
+	gcc \
+	musl-dev \
+	python3-dev \
+	linux-headers
+
+# Copy application files and install Python dependencies
 COPY . /app
 WORKDIR /app
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt --target=/app/dependencies
 
+# Stage 2: Final Image
+FROM python:3.13-alpine
 
-# Install build dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-	gcc \
-	python3-dev \
-	&& rm -rf /var/lib/apt/lists/*
+# Install runtime dependencies
+RUN apk add --no-cache bash
 
+# Copy application and dependencies
+COPY --from=builder /app /app
+WORKDIR /app
 
-RUN pip install --no-cache-dir -r requirements.txt
-
-RUN useradd app
+# Create a non-root user and switch to it
+RUN adduser -D app
 USER app
 
-EXPOSE 8080
+# Enter the Environment
+ENV PYTHONPATH=/app/dependencies
+# Command to run the application
 CMD ["bash", "/app/run.sh"]
 

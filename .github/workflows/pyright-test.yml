@@ -27,7 +27,7 @@ jobs:
 
       - uses: jakebailey/pyright-action@v2
         with:
-          version: 1.1.311 # Optional (change me!)
+          version: latest
           pylance-version: latest-release
 
         continue-on-error: false

@@ -7,10 +7,10 @@ import arc
 from typing import Any
 
 from ..bot import client, BOT
-from ..utils import configVERSION
+from ..utils import configVERSION, configMESSAGE
 
 plugin: arc.GatewayPlugin = arc.GatewayPlugin("Immutable")
-version: str = "1.0"
+version: float = 1.0
 
 activityTypes: dict[str, hikari.ActivityType] = {
     'Watching': hikari.ActivityType.WATCHING,
@@ -32,7 +32,7 @@ statusTypes: dict[str, hikari.Status] = {
 async def set_presence(event: arc.StartedEvent[Any], /) -> None:
   await BOT.update_presence(
     status=hikari.Status.ONLINE,
-    activity=hikari.Activity(name=f'A Game Engine Community', type=hikari.ActivityType.WATCHING)
+    activity=hikari.Activity(name=f'{configMESSAGE.getActivity()}', type=hikari.ActivityType.WATCHING)
     )
 
 
@@ -46,7 +46,7 @@ async def versions(ctx: arc.GatewayContext, /) -> None:
 
   versionEmbed.add_field(name="Current Version", value=current)
   if current != latest:
-    versionEmbed.colour = hikari.Color(int("ff0000"))
+    versionEmbed.colour = hikari.Color(int("ff0000", 16))
     versionEmbed.add_field(name="Latest Version", value=latest)
     if current[0] != latest[0]:
       # TODO:
