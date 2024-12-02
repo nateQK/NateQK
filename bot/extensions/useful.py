@@ -177,8 +177,12 @@ async def updateBlaziumClasses(ctx: arc.GatewayContext) -> None:
 async def requestClass(
     ctx: arc.GatewayContext,
     nodename: arc.Option[str, arc.StrParams()]):
-  name = files.nodes[f"{nodename.lower()}.xml"]
-  xml: Any = xmlParser.parseNode('Area2D')
+  try:
+    name = files.nodes[f"{nodename.lower()}.xml"] # type: ignore
+  except KeyError:
+    await ctx.respond("The node you specified does not exist!")
+    return
+  xml: Any = xmlParser.parseNode(name) # type: ignore
 
   requestEmbed: hikari.Embed = hikari.Embed(title=xml["name"], url=f"https://github.com/blazium-engine/blazium/blob/blazium-dev/doc/classes/{xml['name']}.xml", description=str(xml["description"]))
   requestEmbed.set_author(name="NaterBot", icon=configBOT.getBotPFP(), url="https://github.com/nateQK/NateQK")
