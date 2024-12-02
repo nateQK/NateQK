@@ -50,7 +50,7 @@ client.load_extensions_from(path.join("bot", "extensions"))
 @client.listen()
 async def on_startup(event: arc.StartedEvent[Any]) -> None:
     #print("[=] STARTED")
-    files.getFiles()
+    files.getFiles() # type: ignore
     from apscheduler.schedulers.asyncio import AsyncIOScheduler # type: ignore
     scheduler = AsyncIOScheduler()
     scheduler.add_job(hourlyTasks, 'cron', minute=0) # type: ignore
