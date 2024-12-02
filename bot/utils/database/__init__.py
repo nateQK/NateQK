@@ -1,7 +1,7 @@
 from alembic.config import Config
 from alembic import command
 from .. import configDB as config
-
+from loguru import logger
 
 
 
@@ -9,7 +9,6 @@ from .. import configDB as config
 alembic_cfg = Config()
 alembic_cfg.set_main_option("script_location", "bot/utils/database/alembic")
 alembic_cfg.set_main_option("prepend_sys_path", ".")
-
 
 
 if not str(config.getPassword) == str(""):

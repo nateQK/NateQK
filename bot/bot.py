@@ -8,12 +8,32 @@ import hikari
 import arc
 import miru
 from os import path
+from sys import stderr
 from loguru import logger
 from typing import Any
 
-from .utils import configBOT, configDB, configVERSION
+from .utils import configBOT, configVERSION
 
-configDB.getHost() # NOTE: Here to stop a pyright error
+def debug_init(trace: bool = False, debug: bool = False):
+    logger.remove()
+    if debug:
+        logger.add(stderr, level='DEBUG')
+    elif trace:
+        logger.add(stderr, level='TRACE')
+    else:
+        logger.add(stderr, level='INFO')
+        pass
+    pass
+
+debug_init(False, False)
+logger.debug("Debug is Working")
+logger.trace("Trace is Working")
+logger.error("Error is Working")
+logger.info("Info is Working")
+logger.warning("Warning is Working")
+logger.success("Success is Working")
+logger.critical("Critical is Working")
+
 
 BOT: hikari.GatewayBot = hikari.GatewayBot(
     token=configBOT.getToken(),
@@ -29,5 +49,5 @@ client.load_extensions_from(path.join("bot", "extensions"))
 
 @client.listen()
 async def on_startup(event: arc.StartedEvent[Any]) -> None:
-    print("[=] STARTED")
+    #print("[=] STARTED")
     logger.info(f"Bot Version: {configVERSION.getVersion()}")

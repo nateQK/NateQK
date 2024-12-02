@@ -1,2 +1,9 @@
 .venv
 *__pycache__*
+activate
+Screenshot From 2024-11-18 02-36-42.png
+.env
+blazium
+blazium/
+.vscode
+app.log
