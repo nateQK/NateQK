@@ -4,6 +4,7 @@ from loguru import logger
 from datetime import datetime
 from ..utils import configBOT, configGIT
 from ..utils.github import download_directory, update_directory
+from ..utils.parsers.xml import xmlParser
 import requests
 from pydantic import BaseModel as base
 from pydantic import Field
@@ -157,6 +158,7 @@ async def links(ctx: arc.GatewayContext) -> None:
 @arc.with_hook(arc.has_permissions(hikari.Permissions.ADMINISTRATOR))
 @arc.slash_command("updateclasses", "This command will auto-run Every hour on the hour")
 async def updateBlaziumClasses(ctx: arc.GatewayContext) -> None:
+  await ctx.defer()
   job: int
   if not path.exists(configGIT.getLocalDir()):
     job = download_directory(configGIT.getRepo())
@@ -168,6 +170,37 @@ async def updateBlaziumClasses(ctx: arc.GatewayContext) -> None:
     await ctx.respond("Successfully updated/downloaded files")
   elif job == 0:
     await ctx.respond("An error occured when updating files. Check logs and contact <@358720980669038592>")
+
+@plugin.include
+@arc.with_hook(arc.guild_only)
+@arc.slash_command("node", "Describes a node to you, with links to tutorials if available")
+async def requestClass(
+    ctx: arc.GatewayContext,
+    nodename: arc.Option[str, arc.StrParams()]):
+  xml: Any = xmlParser.parseNode("Node2D")
+  
+
+  requestEmbed: hikari.Embed = hikari.Embed(title=xml["name"], url=f"https://github.com/blazium-engine/blazium/blob/blazium-dev/doc/classes/{xml['name']}.xml", description=str(xml["description"]))
+  requestEmbed.set_author(name="NaterBot", icon=configBOT.getBotPFP(), url="https://github.com/nateQK/NateQK")
+  
+  if xml["inherits"] != None:
+    requestEmbed.add_field(name="Inherits", value=xml["inherits"])
+  tutstr: str = ""
+
+  for tutorial in xml['tutorials']:
+    tutstr = tutstr + f"[{tutorial['title']}]({tutorial['url']})\n"
+
+
+  requestEmbed.add_field(name="Tutorials", value=tutstr)
+
+
+
+
+  await ctx.respond(embed=requestEmbed)
+
+
+
+
 
 
 #@plugin.include
