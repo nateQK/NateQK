@@ -11,6 +11,16 @@ from pydantic import Field
 from os import path
 #from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from typing import Any
+import Levenshtein
+
+
+def get_best_match(input_word: str) -> Any:
+
+    best_match = min(files.validNames, key=lambda word: Levenshtein.distance(input_word, word))
+
+    return best_match
+
+
 
 
 class reactionsDict(base):
@@ -105,8 +115,8 @@ async def steal_time(time:str) -> datetime:
 
 
 
-@plugin.include
-@arc.slash_command("issues", "Cycle Through Github issues in the github")
+#@plugin.include
+#@arc.slash_command("issues", "Cycle Through Github issues in the github")
 async def issues(ctx: arc.GatewayContext) -> None:
   headers: dict[str, str] = {
     "accept": "application/vnd.github.raw+json"
@@ -180,7 +190,12 @@ async def requestClass(
   try:
     name = files.nodes[f"{nodename.lower()}.xml"] # type: ignore
   except KeyError:
-    await ctx.respond("The node you specified does not exist!")
+    match: str = get_best_match(nodename.lower())
+    if not match == "":
+      await ctx.respond(f"The node you specified does not exist! Were you searching for `{match}`?")
+    else:
+      await ctx.respond(f"The node you specified does not exist!")
+
     return
   xml: Any = xmlParser.parseNode(name) # type: ignore
 
