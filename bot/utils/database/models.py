@@ -1,4 +1,4 @@
-from sqlalchemy import BigInteger, ForeignKey, Column, Integer
+from sqlalchemy import BigInteger, ForeignKey, Column, Integer, String
 from sqlalchemy.orm import DeclarativeBase, relationship
 
 class Base(DeclarativeBase):
@@ -17,6 +17,17 @@ class ServerSettings(Base):
 
     views = relationship("Views", back_populates="server")
 
+class StorePages(Base):
+    __tablename__ = "storePages"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    guildID = Column(BigInteger, ForeignKey(f"{ServerSettings.__tablename__}.guildID"))
+    storeName = Column(String)
+    storeLink = Column(String)
+    description = Column(String)
+
+
+    server = relationship("ServerSettings", back_populates="views")
 
 class Views(Base):
     __tablename__ = "arcViews"
@@ -35,7 +46,8 @@ class Users(Base):
     uid = Column(BigInteger, unique=True)
     worth = Column(Integer)
     messagesSent = Column(Integer)  # NOTE: Ballpark Estimation of How many messages have been sent by this user (Not 100% accurate)
-    
+    warnings = Column(Integer) # NOTE: How many times this user has been warned
+
     economy = relationship("Economy", back_populates="user")
     levels = relationship("Levels", back_populates="user")
 
