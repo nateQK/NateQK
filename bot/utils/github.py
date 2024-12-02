@@ -15,9 +15,13 @@ class files():
     @classmethod
     def getFiles(cls) -> dict[str, str]:
         fileStruct: dict[str, str] = {}
+        validNames: list[str] = []
         for file in listdir("blazium/doc/classes"):
             fileStruct[f"{file.lower()}"] = file
+            validNames.append(f"{file.lower()}")
         cls.nodes = fileStruct
+        cls.validNames = validNames
+
         return fileStruct
 
 
