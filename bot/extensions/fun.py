@@ -8,7 +8,9 @@ from typing import Any
 from random import choice, randint
 from asyncio import sleep
 
-from ..utils import configBOT
+from bot.config import Config
+
+config = Config.config
 
 plugin: arc.GatewayPlugin = arc.GatewayPlugin("Fun")
 version: float = 1.0
@@ -133,10 +135,7 @@ async def source(
     "Why tf would you ask me?",
     "Maybe",
     "Bruh, ask again",
-    "This command gonna get me cancelled. but no to your question",
-    "This was written by a monkey, wasn't it...",
     f"You know, I see {members-1} Others that can answer that question",
-    "NOOOOOO. Don't make me @ㅤeveryone",
   ]
   ballembed: hikari.Embed = hikari.Embed(title="My Sources say...")
   mychoice: Any = choice(answers)
@@ -167,7 +166,7 @@ async def dice(
 
     for _ in range(amount):
         rollembed.add_field(f"d{_}", str(randint(1, sides)), inline=True)
-    rollembed.set_author(name="NaterBot", icon=str(configBOT.getBotPFP()))
+    rollembed.set_author(name="NaterBot", icon=str(config.bot.botpfp))
 
     await ctx.respond(embed=rollembed)
 

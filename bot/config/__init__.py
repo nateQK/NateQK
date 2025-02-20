@@ -1,8 +1,8 @@
-'''Config and Other globablly usable variables module.'''
+'''App's config using Pydantic base models at config.Config'''
 import tomllib
 from os import path
 from loguru import logger
-from pydantic import BaseModel
+from pydantic import BaseModel, ValidationError
 from typing import Any
 import requests
 import os
@@ -34,27 +34,27 @@ class VersionConfig(BaseModel):
     branch: str
 
 
-class Configuration(BaseModel):
-    DEFAULT: DefaultConfig
-    DATABASE: DatabaseConfig
-    GIT: GitConfig
-    MESSAGE: MessageConfig
+class configuration(BaseModel):
+    bot: DefaultConfig
+    database: DatabaseConfig
+    git: GitConfig
+    message: MessageConfig
     VERSION: VersionConfig
 
 
 
 class Config:
-    config: Configuration
+    config: configuration
     @classmethod
     def loadConfig(cls) -> None:
         """Loads, Fetches, and Validates config from a pre-determined file"""
         load_dotenv()
         config: dict[str, Any] = {
-            'DEFAULT': 
+            'bot': 
                 {'token': os.getenv("TOKEN"),
                  'botpfp': os.getenv("BOTPFP")
                  },
-            'DATABASE': 
+            'database': 
                 {'engine': os.getenv("ENGINE"),
                 'host': os.getenv("HOST"),
                 'port': os.getenv("PORT"),
@@ -62,13 +62,13 @@ class Config:
                 'password': os.getenv("PASSWORD"),
                 'database': os.getenv("DATABASE")
                  },
-            'GIT':
+            'git':
                 {'repo': os.getenv("REPO_URL"),
-                 'localdir': "blazium"
+                 'localdir': "blazium",
 
                 },
-            'MESSAGE': 
-                {'activity': os.getenv("ACTIVITY")}
+            'message': 
+                {'activity': os.getenv("ACTIVITY")},
         }
 
 
@@ -79,80 +79,16 @@ class Config:
 
         for x in fileconfig.values():
             config["VERSION"] = x
-
-        cls.config = Configuration(**config)
-
-
-    class Database:
-
-        @classmethod
-        def getEngine(cls) -> str:
-            """Fetches values of Datbase.host from config"""
-            return Config.config.DATABASE.engine
+        try:
+            cls.config = configuration(**config)
+        except ValidationError as exc:
+            print(repr(exc.errors()[0]['type']))
+            #> 'missing'
 
 
-        @classmethod
-        def getHost(cls) -> str:
-            """Fetches values of Datbase.host from config"""
-            return Config.config.DATABASE.host
 
-        @classmethod
-        def getPort(cls) -> int:
-            """Fetches values of Datbase.port from config"""
-            return Config.config.DATABASE.port
-
-        @classmethod
-        def getUsername(cls) -> str:
-            """Fetches values of Database.username from config"""
-            return Config.config.DATABASE.username
-
-        @classmethod
-        def getPassword(cls) -> str:
-            """Fetches values of Database.username from config"""
-            return Config.config.DATABASE.password
-        
-        @classmethod
-        def getDatabase(cls) -> str:
-            """Fetches values of Database.database from config"""
-            return Config.config.DATABASE.database
-
-    class Git:
-        @classmethod
-        def getRepo(cls) -> str:
-            """Fetches value of GIT.repo from config"""
-            return Config.config.GIT.repo
-
-        @classmethod
-        def getLocalDir(cls) -> str:
-            """Fetches value of GIT.localdir from config"""
-            return Config.config.GIT.localdir
-
-    class Message:
-        @classmethod
-        def getActivity(cls) -> str:
-            return Config.config.MESSAGE.activity
-
-    class Bot:
-
-        @classmethod
-        def getToken(cls) -> str:
-            """Gets bot token from config"""
-            return Config.config.DEFAULT.token
-
-        @classmethod
-        def getBotPFP(cls) -> str:
-            """Gets bot token from config"""
-            return Config.config.DEFAULT.botpfp
 
     class Version:
-
-        @classmethod
-        def getVersion(cls) -> str:
-            """Gets NateQK's Current version and compares to latest release"""
-
-
-            CurrentVersion=Config.config.VERSION.version+"-"+Config.config.VERSION.branch
-            return CurrentVersion
 
         @classmethod
         def compareLatest(cls) -> str:

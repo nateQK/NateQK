@@ -11,8 +11,14 @@ from os import path
 from sys import stderr
 from loguru import logger
 from typing import Any
-from .utils.github import files
-from .utils import configBOT, configVERSION, hourlyTasks
+from .github import files
+from .config import configuration as config
+from .tasks import hourlyTasks
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from .config import Config
+from .config import configuration
+
+Config.loadConfig()
 
 def debug_init(trace: bool = False, debug: bool = False):
     logger.remove()
@@ -35,9 +41,10 @@ logger.success("Success is Working")
 logger.critical("Critical is Working")
 
 
+
 BOT: hikari.GatewayBot = hikari.GatewayBot(
-    token=configBOT.getToken(),
-    banner=None,
+    token=Config.config.bot.token,
+    #banner=None,
     intents=hikari.Intents.ALL,
 )
 
@@ -49,10 +56,8 @@ client.load_extensions_from(path.join("bot", "extensions"))
 
 @client.listen()
 async def on_startup(event: arc.StartedEvent[Any]) -> None:
-    #print("[=] STARTED")
-    files.getFiles() # type: ignore
-    from apscheduler.schedulers.asyncio import AsyncIOScheduler # type: ignore
+    files.getFiles()
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(hourlyTasks, 'cron', minute=0) # type: ignore
-    scheduler.start() # type: ignore
-    logger.info(f"Bot Version: {configVERSION.getVersion()}")
+    scheduler.add_job(hourlyTasks, 'cron', minute=0) 
+    scheduler.start()
+    logger.info(f"Bot Version: {Config.config.VERSION}")

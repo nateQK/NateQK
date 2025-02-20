@@ -6,7 +6,7 @@ from ..bot import BOT
 
 from loguru import logger
 
-from ..utils import configBOT
+from bot.config import Config
 
 plugin: arc.GatewayPlugin = arc.GatewayPlugin("Ping")
 version: float = 1.0
@@ -31,7 +31,7 @@ async def ping(ctx: arc.GatewayContext, /) -> None:
         pingEmbed.add_field(name="WHY!!!!", value="Is your server running in a chinese basement???")
     else:
         pingEmbed.add_field(name="Latency", value=f'{botPing} Ms')
-    pingEmbed.set_author(name="NaterBot", icon=str(configBOT.getBotPFP()))
+    pingEmbed.set_author(name="NaterBot", icon=str(Config.config.bot.botpfp))
 
     await ctx.respond(embed=pingEmbed)
 

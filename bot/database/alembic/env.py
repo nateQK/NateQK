@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from alembic import context
 try:
-    from bot.utils.database.models import Base 
+    from bot.database.models import Base
 except ModuleNotFoundError:
     from models import Base # type: ignore
 

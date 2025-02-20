@@ -1,5 +1,5 @@
 #!/bin/bash
 
-cd bot/utils/database
+cd bot/database
 
 alembic revision --autogenerate

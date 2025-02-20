@@ -3,8 +3,8 @@
 from typing import Any
 import arc
 from sqlalchemy import select, update
-from ..utils.database.models import Economy, Users
-from ..utils.database.database import Database
+from bot.database.models import Economy, Users
+from bot.database.database import Database
 #from ..bot import BOT
 
 from loguru import logger

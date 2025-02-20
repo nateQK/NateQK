@@ -13,9 +13,8 @@ from typing import TypedDict
 from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine, AsyncSession, async_sessionmaker
 
 
-from .. import configDB
-
-test=False
+from bot.config import Config
+config = Config.config
 
 class DBInfo(TypedDict):
     database: str
@@ -39,16 +38,16 @@ class Database:
     @classmethod
     async def connect(cls) -> AsyncEngine:
         try:
-            cls.engineType = getattr(DBTypes, configDB.getEngine())
+            cls.engineType = getattr(DBTypes, config.database.engine)
             logger.debug(f"""
-                        Username: {configDB.getUsername()}
-                        Password: {configDB.getPassword()}
-                        Host: {configDB.getHost()}
-                        Database: {configDB.getDatabase()}
+                        Username: {config.database.username}
+                        Password: {config.database.password}
+                        Host: {config.database.host}
+                        Database: {config.database.database}
                         Engine Info: {cls.engineType}
                 """)
             cls.engine = create_async_engine(
-                f"{cls.engineType['database']}+{cls.engineType['driver']}://{configDB.getUsername()}:{configDB.getPassword()}@{configDB.getHost()}/{configDB.getDatabase()}",
+                f"{cls.engineType['database']}+{cls.engineType['driver']}://{config.database.username}:{config.database.password}@{config.database.host}/{config.database.database}",
                 pool_size=20,
                 max_overflow=40,
                 pool_timeout=30,

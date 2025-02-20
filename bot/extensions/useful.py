@@ -2,9 +2,9 @@ import hikari
 import arc
 from loguru import logger
 from datetime import datetime
-from ..utils import configBOT, configGIT
-from ..utils.github import download_directory, update_directory, files
-from ..utils.parsers.xml import xmlParser
+from bot.config import Config
+from bot.github import download_directory, update_directory, files
+from bot.parsers.xml import xmlParser
 import requests
 from pydantic import BaseModel as base
 from pydantic import Field
@@ -13,6 +13,7 @@ from os import path
 from typing import Any
 import Levenshtein
 
+config = Config.config
 
 def get_best_match(input_word: str) -> Any:
 
@@ -128,7 +129,7 @@ async def issues(ctx: arc.GatewayContext) -> None:
     await ctx.respond("Validation failed, or the endpoint has been spammed.")
     return
   else:
-    await ctx.respond(f"An error has occured, We got a status code of {response.status_code} ping Naterfute and Bioblaze Payne")
+    await ctx.respond(f"An error has occured, We got a status code of {response.status_code} ping Naterfute or Bioblaze Payne")
     return
   issue: internalIssues
   issues: internalIssues = internalIssues(**response.json()[0])
@@ -155,11 +156,11 @@ async def links(ctx: arc.GatewayContext) -> None:
   # - Description
   # When Submitted We put a new entry in the database with this info, probably a new table
 
-  em.set_author(name="NaterBot", icon=str(configBOT.getBotPFP()))
+  em.set_author(name="NaterBot", icon=str(config.bot.botpfp))
   em.add_field("Github", "https://github.com/blazium-engine/blazium/releases")
   em.add_field("Itch.io", "https://blaziumengine.itch.io/")
   em.add_field("Steam", "https://store.steampowered.com/app/3293450/Blazium_Engine/)")
-  em.set_footer("Blazium Community Bot", icon=str(configBOT.getBotPFP()))
+  em.set_footer("Blazium Community Bot", icon=str(config.bot.botpfp))
   await ctx.respond(embed=em)
 
 
@@ -170,8 +171,8 @@ async def links(ctx: arc.GatewayContext) -> None:
 async def updateBlaziumClasses(ctx: arc.GatewayContext) -> None:
   await ctx.defer()
   job: int
-  if not path.exists(configGIT.getLocalDir()):
-    job = download_directory(configGIT.getRepo())
+  if not path.exists(config.git.localdir):
+    job = download_directory(config.git.repo)
 
   else:
     job = update_directory()
@@ -200,7 +201,7 @@ async def requestClass(
   xml: Any = xmlParser.parseNode(name) # type: ignore
 
   requestEmbed: hikari.Embed = hikari.Embed(title=xml["name"], url=f"https://github.com/blazium-engine/blazium/blob/blazium-dev/doc/classes/{xml['name']}.xml", description=str(xml["description"]))
-  requestEmbed.set_author(name="NaterBot", icon=configBOT.getBotPFP(), url="https://github.com/nateQK/NateQK")
+  requestEmbed.set_author(name="NaterBot", icon=config.bot.botpfp, url="https://github.com/nateQK/NateQK")
   requestEmbed.color = hikari.Color(int("7732D9", 16))
 
   if xml["inherits"] != None:

@@ -7,7 +7,9 @@ import arc
 from typing import Any
 
 from ..bot import client, BOT
-from ..utils import configVERSION, configMESSAGE
+from bot.config import Config
+
+config = Config.config
 
 plugin: arc.GatewayPlugin = arc.GatewayPlugin("Immutable")
 version: float = 1.0
@@ -32,7 +34,7 @@ statusTypes: dict[str, hikari.Status] = {
 async def set_presence(event: arc.StartedEvent[Any], /) -> None:
   await BOT.update_presence(
     status=hikari.Status.ONLINE,
-    activity=hikari.Activity(name=f'{configMESSAGE.getActivity()}', type=hikari.ActivityType.WATCHING)
+    activity=hikari.Activity(name=f'{config.message.activity}', type=hikari.ActivityType.WATCHING)
     )
 
 
@@ -41,8 +43,8 @@ async def set_presence(event: arc.StartedEvent[Any], /) -> None:
 async def versions(ctx: arc.GatewayContext, /) -> None:
   # INFO: This is not ready yet, but the code should work
   versionEmbed: hikari.Embed = hikari.Embed(title='Version', url="https://nateqk.github.io/")
-  current:str = configVERSION.getVersion()
-  latest:str = configVERSION.latestVersion()
+  current:str = config.VERSION.version
+  latest:str = ""
 
   versionEmbed.add_field(name="Current Version", value=current)
   if current != latest:
