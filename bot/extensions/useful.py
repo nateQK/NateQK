@@ -9,7 +9,6 @@ import requests
 from pydantic import BaseModel as base
 from pydantic import Field
 from os import path
-#from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from typing import Any
 import Levenshtein
 
@@ -189,7 +188,7 @@ async def requestClass(
     ctx: arc.GatewayContext,
     nodename: arc.Option[str, arc.StrParams()]):
   try:
-    name = files.nodes[f"{nodename.lower()}.xml"] # type: ignore
+    name = files.nodes[f"{nodename.lower()}.xml"]
   except KeyError:
     match: str = get_best_match(nodename.lower())
     if not match == "":

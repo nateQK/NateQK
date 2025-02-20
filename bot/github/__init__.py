@@ -3,12 +3,13 @@ bot.utils.github.py
 Bad Programming, this file only has some github interactions"""
 import os
 from os import listdir
-from git import Repo
+from bot.config import Config
+from git import Repo, GitCommandError
 from loguru import logger
-
+import pathlib
 
 repo_url = "https://github.com/blazium-engine/blazium.git"
-local_dir = os.path.join("blazium")
+local_file = pathlib.Path(__file__).parent.resolve()
 
 class files():
 
@@ -16,7 +17,7 @@ class files():
     def getFiles(cls) -> dict[str, str]:
         fileStruct: dict[str, str] = {}
         validNames: list[str] = []
-        for file in listdir("blazium/doc/classes"):
+        for file in listdir(os.path.join(local_file, "blazium", "doc", "classes")):
             fileStruct[f"{file.lower()}"] = file
             validNames.append(f"{file.lower()}")
         cls.nodes = fileStruct
@@ -25,7 +26,7 @@ class files():
         return fileStruct
 
 
-def download_directory(repo_url: str, local_dir: str=os.path.join("blazium")) -> int:
+def download_directory(repo_url: str | None = None, local_dir: str = os.path.join(str(local_file), "blazium")) -> int:
     """
     Downloads all files in a specific GitHub repository directory.
     :param repo_url: Repository url in the format 'https://github.com/blazium-engine/blazium.git'
@@ -36,6 +37,8 @@ def download_directory(repo_url: str, local_dir: str=os.path.join("blazium")) ->
     """
 
     try:
+        if not repo_url:
+            repo_url = Config.config.git.repo
         repo = Repo.clone_from(
             url=repo_url,
             to_path=local_dir,
@@ -44,13 +47,15 @@ def download_directory(repo_url: str, local_dir: str=os.path.join("blazium")) ->
 
         repo.git.sparse_checkout("set", "doc/classes")
         repo.git.checkout("blazium-dev")
+    except GitCommandError as e:
+        pass
     except Exception as e:
         logger.critical(e)
         return 0
     finally:
-        logger.success("Successfully Downloaded git ")
-        files.getFiles()
-        return 1
+        logger.success("Finished Git command")
+    files.getFiles()
+    return 1
 
 def update_directory(local_dir: str=os.path.join("blazium")) -> int:
     """

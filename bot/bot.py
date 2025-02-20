@@ -11,12 +11,10 @@ from os import path
 from sys import stderr
 from loguru import logger
 from typing import Any
-from .github import files
-from .config import configuration as config
+from .github import files, download_directory, update_directory
 from .tasks import hourlyTasks
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from .config import Config
-from .config import configuration
 
 Config.loadConfig()
 
@@ -56,7 +54,11 @@ client.load_extensions_from(path.join("bot", "extensions"))
 
 @client.listen()
 async def on_startup(event: arc.StartedEvent[Any]) -> None:
+    
+    download_directory()
+    update_directory()
     files.getFiles()
+
     scheduler = AsyncIOScheduler()
     scheduler.add_job(hourlyTasks, 'cron', minute=0) 
     scheduler.start()
