@@ -30,15 +30,17 @@ def debug_init(trace: bool = False, debug: bool = False):
     pass
 
 debug_init(False, False)
-logger.debug("Debug is Working")
-logger.trace("Trace is Working")
-logger.error("Error is Working")
-logger.info("Info is Working")
-logger.warning("Warning is Working")
-logger.success("Success is Working")
-logger.critical("Critical is Working")
+def test_logging():
+    logger.debug("Debug is Working")
+    logger.trace("Trace is Working")
+    logger.error("Error is Working")
+    logger.info("Info is Working")
+    logger.warning("Warning is Working")
+    logger.success("Success is Working")
+    logger.critical("Critical is Working")
 
 
+test_logging()
 
 BOT: hikari.GatewayBot = hikari.GatewayBot(
     token=Config.config.bot.token,
