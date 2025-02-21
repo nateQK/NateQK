@@ -13,7 +13,7 @@ from loguru import logger
 from typing import Any
 from .github import files, download_directory, update_directory
 from .tasks import hourlyTasks
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.schedulers.asyncio import AsyncIOScheduler # type: ignore
 from .config import Config
 
 Config.loadConfig()
@@ -62,6 +62,6 @@ async def on_startup(event: arc.StartedEvent[Any]) -> None:
     files.getFiles()
 
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(hourlyTasks, 'cron', minute=0) 
+    scheduler.add_job(hourlyTasks, 'cron', minute=0) #type: ignore
     scheduler.start()
     logger.info(f"Bot Version: {Config.config.VERSION}")

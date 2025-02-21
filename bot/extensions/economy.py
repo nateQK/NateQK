@@ -2,7 +2,7 @@
 #import miru
 from typing import Any
 import arc
-from sqlalchemy import select, update
+from sqlalchemy import select
 from bot.database.models import Economy, Users
 from bot.database.database import Database
 #from ..bot import BOT
@@ -17,18 +17,19 @@ version: float = 1.0
 
 @plugin.include
 @arc.slash_command("balance", "Checks your current balance")
-async def balance(ctx: arc.GatewayContext):
-  bal = (
-    select(Economy).
-    where(Economy.uid == ctx.user.id)
-  )
-  user_economy: Any = result.scalar_one_or_none()
+async def balance(ctx: arc.GatewayContext) -> None:
+    bal = (
+        select(Economy).
+        where(Economy.uid == ctx.user.id)
+      )
+    user_economy: Any = result.scalar_one_or_none() # type: ignore
+    type(bal)
 
-  if user_economy is None:
-    await ctx.respond("You don't have an account in the economy system yet!")
-    return
+    if user_economy is None:
+        await ctx.respond("You don't have an account in the economy system yet!")
+        return None
 
-  await ctx.respond(user_economy)
+    await ctx.respond(user_economy)
 
 
 

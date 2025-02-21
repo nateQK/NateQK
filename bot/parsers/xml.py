@@ -19,7 +19,7 @@ class xmlParser:
             title = link['title']# type: ignore
             url:str = link.text.strip()# type: ignore
             url:str = url.replace("$DOCS_URL", "https://docs.blazium.app")# type: ignore
-            tutorials.append({"title": title, "url": url})
+            tutorials.append({"title": title, "url": url}) # type: ignore
         
 
         returnData: dict[str, Any] = {
