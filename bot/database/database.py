@@ -13,7 +13,10 @@ from typing import TypedDict
 from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine, AsyncSession, async_sessionmaker
 
 
+from alembic.config import Config as alConf
+from alembic import command
 from bot.config import Config
+
 config = Config.config
 
 class DBInfo(TypedDict):
@@ -26,6 +29,29 @@ class DBTypes():
     mysql: DBInfo = {"database": "mysql", "driver": "aiomysql"}
     mariadb: DBInfo = {"database": "mysql", "driver": "aiomysql"}
     #sqlite: DBInfo = {"database": "sqlite", "driver": "aiosqlite"} # TODO: Implement logic that allows for sqlite to be used properly
+
+class Migrate():
+    def migrate(self):
+
+        # NOTE: Setup alembic config
+        engineType = getattr(DBTypes, config.database.engine)
+        alembic_cfg = alConf()
+        alembic_cfg.set_main_option("script_location", "bot/database/alembic")
+        alembic_cfg.set_main_option("prepend_sys_path", ".")
+
+        logger.debug(config.database)
+        if not str(config.database.password) == str(""):
+            alembic_cfg.set_main_option("sqlalchemy.url", f'{engineType["engine"]}+{engineType["driver"]}://{config.database.username}:{config.database.password}@{config.database.host}:{config.database.port}/{config.database.database}')
+        else:
+            alembic_cfg.set_main_option("sqlalchemy.url", f'{engineType["engine"]}+{engineType["driver"]}://{config.database.username}@{config.database.host}:{config.database.port}/{config.database.database}')
+
+
+
+        # NOTE: Upgrade database tables to latest version
+        command.upgrade(alembic_cfg, "head")
+
+
+
 
 
 
