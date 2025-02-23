@@ -6,7 +6,8 @@ RUN apk add --no-cache \
 	gcc \
 	musl-dev \
 	python3-dev \
-	linux-headers
+	linux-headers \
+	git 
 
 # Copy application files and install Python dependencies
 COPY . /app
@@ -18,7 +19,9 @@ RUN pip install --no-cache-dir -r requirements.txt --target=/app/dependencies
 FROM python:3.13-alpine
 
 # Install runtime dependencies
-RUN apk add --no-cache bash
+RUN apk add --no-cache \
+	bash \
+	git 
 
 # Copy application and dependencies
 COPY --from=builder /app /app
