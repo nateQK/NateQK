@@ -5,7 +5,7 @@ from typing import Any
 class xmlParser:
     @classmethod
     def parseNode(cls, nodeName: str):
-        with open(f"blazium/doc/classes/{nodeName}", "r") as file:
+        with open(f"bot/github/blazium/doc/classes/{nodeName}", "r") as file:
             xml_content = file.read()
 
 
