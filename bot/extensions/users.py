@@ -4,7 +4,7 @@ import arc
 #import miru
 from loguru import logger
 
-from bot.bot import BOT
+# from bot.bot import BOT
 
 plugin: arc.GatewayPlugin = arc.GatewayPlugin("users")
 version: float = 1.0
