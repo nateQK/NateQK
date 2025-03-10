@@ -28,12 +28,12 @@ def get_best_match(input_word: str, score_cutoff: float = 70) -> Optional[str]:
 
 async def parse_xml_description(description: str) -> str:
 
-  descriptionreturn: str = re.sub(r"\[b\]", "", description)
-  descriptionreturn: str = re.sub(r"\[/b\]", "\n", descriptionreturn)
+  descriptionreturn: str = re.sub(r"\[b\]", "** ", description)
+  descriptionreturn: str = re.sub(r"\[/b\]", "**\n", descriptionreturn)
   descriptionreturn: str = re.sub(r"\[i\]", "*", descriptionreturn)
   descriptionreturn: str = re.sub(r"\[/i\]", "*", descriptionreturn)
-  descriptionreturn: str = re.sub(r"\[code\]", "```", descriptionreturn)
-  descriptionreturn: str = re.sub(r"\[/code\]", "```", descriptionreturn)
+  descriptionreturn: str = re.sub(r"\[code\]", "`", descriptionreturn)
+  descriptionreturn: str = re.sub(r"\[/code\]", "`", descriptionreturn)
 
 
 
