@@ -60,7 +60,7 @@ pygit==0.1
 pygments==2.18.0
 pymongo==4.9.2
 pymysql==1.1.1
-pyright==1.1.394
+pyright==1.1.396
 pytest==8.3.3
 pytest-asyncio==0.24.0
 python-dotenv==1.0.1
