@@ -13,7 +13,9 @@ class ServerSettings(Base):
     userAmount = Column(Integer)
     economy = Column(Integer)  # NOTE: How much money is in the economy currently
     economyLeft = Column(Integer)  # NOTE: How much money is left in the public bank
+    inflation = Column(Integer) # NOTE: Current market inflation value
     lotterypot = Column(Integer)  # NOTE: How much money has been burned or "Defaced"
+
 
     views = relationship("Views", back_populates="server")
 
@@ -44,22 +46,12 @@ class Users(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     uid = Column(BigInteger, unique=True)
-    worth = Column(Integer)
+    balance = Column(Integer)
     messagesSent = Column(Integer)  # NOTE: Ballpark Estimation of How many messages have been sent by this user (Not 100% accurate)
     warnings = Column(Integer) # NOTE: How many times this user has been warned
 
     economy = relationship("Economy", back_populates="user")
     levels = relationship("Levels", back_populates="user")
-
-
-class Economy(Base):
-    __tablename__ = "Economy"
-
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    uid = Column(BigInteger, ForeignKey("Users.uid"))
-    coins = Column(Integer)  # NOTE: How much money the user currently has
-
-    user = relationship("Users", back_populates="economy")
 
 
 class Levels(Base):  # NOTE: This wasn't asked for, I just like level systems, and it's a game engine. so it makes sense

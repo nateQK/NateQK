@@ -15,8 +15,12 @@ from .github import files, download_directory, update_directory
 from .tasks import hourlyTasks
 from apscheduler.schedulers.asyncio import AsyncIOScheduler # type: ignore
 from .config import Config
+from bot.database.migrate import migrate
 
 Config.loadConfig()
+
+migrate()
+
 
 def debug_init(trace: bool = False, debug: bool = False):
     logger.remove()
@@ -29,7 +33,7 @@ def debug_init(trace: bool = False, debug: bool = False):
         pass
     pass
 
-debug_init(False, False)
+debug_init(Config.config.logging.trace, Config.config.logging.debug)
 def test_logging():
     logger.debug("Debug is Working")
     logger.trace("Trace is Working")
@@ -44,7 +48,6 @@ test_logging()
 
 BOT: hikari.GatewayBot = hikari.GatewayBot(
     token=Config.config.bot.token,
-    #banner=None,
     intents=hikari.Intents.ALL,
 )
 
@@ -56,7 +59,7 @@ client.load_extensions_from(path.join("bot", "extensions"))
 
 @client.listen()
 async def on_startup(event: arc.StartedEvent[Any]) -> None:
-    
+
     download_directory()
     update_directory()
     files.getFiles()

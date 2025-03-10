@@ -10,15 +10,20 @@ from pydantic import BaseModel as base
 from pydantic import Field
 from os import path
 from typing import Any
-import Levenshtein
+#import Levenshtein
+from rapidfuzz import process, fuzz
+from typing import Optional
+
 
 config = Config.config
 
-def get_best_match(input_word: str) -> Any:
+#def get_best_match(input_word: str) -> Any:
+#    best_match = min(files.validNames, key=lambda word: Levenshtein.distance(input_word, word))
+#    return best_match
 
-    best_match = min(files.validNames, key=lambda word: Levenshtein.distance(input_word, word))
-
-    return best_match
+def get_best_match(input_word: str, score_cutoff: float = 70) -> Optional[str]:
+    result = process.extractOne(input_word, files.validNames, scorer=fuzz.ratio, score_cutoff=score_cutoff) #type: ignore
+    return result[0] if result else None 
 
 
 
@@ -153,7 +158,7 @@ async def links(ctx: arc.GatewayContext) -> None:
   # Ask the following questions
   # - Title
   # - Description
-  # When Submitted We put a new entry in the database with this info, probably a new table
+  # When Submitted We put a new entry in the database with this info, probably a new row
 
   em.set_author(name="NaterBot", icon=str(config.bot.botpfp))
   em.add_field("Github", "https://github.com/blazium-engine/blazium/releases")
@@ -190,9 +195,9 @@ async def requestClass(
   try:
     name = files.nodes[f"{nodename.lower()}.xml"]
   except KeyError:
-    match: str = get_best_match(nodename.lower())
-    if not match == "":
-      await ctx.respond(f"The node you specified does not exist! Were you searching for `{match}`?")
+    match: str | None = get_best_match(nodename.lower())
+    if not match == None:
+      await ctx.respond(f"The node you specified does not exist! Were you searching for `{match[:-4]}`?")
     else:
       await ctx.respond(f"The node you specified does not exist!")
 

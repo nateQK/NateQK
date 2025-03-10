@@ -1,4 +1,4 @@
-'''App's config using Pydantic base models at config.Config'''
+'''App's config using Pydantic base models at bot.config'''
 import tomllib
 from os import path
 from loguru import logger
@@ -33,8 +33,12 @@ class VersionConfig(BaseModel):
     minor: int
     branch: str
 
+class LoggingConfig(BaseModel):
+    debug: bool
+    trace: bool
 
 class configuration(BaseModel):
+    logging: LoggingConfig
     bot: DefaultConfig
     database: DatabaseConfig
     git: GitConfig
@@ -50,6 +54,12 @@ class Config:
         """Loads, Fetches, and Validates config from a pre-determined file"""
         load_dotenv()
         config: dict[str, Any] = {
+            'logging':
+                    {
+                'debug': os.getenv("DEBUG"),
+                'trace': os.getenv("TRACE")
+
+            },
             'bot': 
                 {'token': os.getenv("TOKEN"),
                  'botpfp': os.getenv("BOTPFP")
