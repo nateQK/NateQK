@@ -26,6 +26,16 @@ def get_best_match(input_word: str, score_cutoff: float = 70) -> Optional[str]:
     result = process.extractOne(input_word, files.validNames, scorer=fuzz.ratio, score_cutoff=score_cutoff) #type: ignore
     return result[0] if result else None 
 
+
+async def parse_xml_nodes(description: str) -> str:
+  """
+  ---
+  Parses node names from the description and hardcodes a link to the docs in them
+  """
+  descriptionreturn: str = re.sub(r"", "", description)
+  
+  return descriptionreturn
+
 async def parse_xml_description(description: str) -> str:
 
   descriptionreturn: str = re.sub(r"\[b\]", "** ", description)
@@ -34,8 +44,6 @@ async def parse_xml_description(description: str) -> str:
   descriptionreturn: str = re.sub(r"\[/i\]", "*", descriptionreturn)
   descriptionreturn: str = re.sub(r"\[code\]", "`", descriptionreturn)
   descriptionreturn: str = re.sub(r"\[/code\]", "`", descriptionreturn)
-
-
 
   return descriptionreturn
 
@@ -118,7 +126,7 @@ class internalIssues(base):
 
 
 
-plugin: arc.GatewayPlugin = arc.GatewayPlugin("Useful")
+plugin: arc.GatewayPlugin = arc.GatewayPlugin("blazium")
 
 #scheduler: AsyncIOScheduler = AsyncIOScheduler()
 timeChoices: list[str]  = ["m", "h", "d"]
@@ -157,9 +165,6 @@ async def issues(ctx: arc.GatewayContext) -> None:
   #logger.error(issues)
 
 
-
-
-
 @plugin.include
 @arc.slash_command("links","Responds with a link to all the stores blazium is on!")
 async def links(ctx: arc.GatewayContext) -> None:
@@ -176,7 +181,7 @@ async def links(ctx: arc.GatewayContext) -> None:
   em.set_author(name="NaterBot", icon=str(config.bot.botpfp))
   em.add_field("Github", "https://github.com/blazium-engine/blazium/releases")
   em.add_field("Itch.io", "https://blaziumengine.itch.io/")
-  em.add_field("Steam", "https://store.steampowered.com/app/3293450/Blazium_Engine/)")
+  em.add_field("Steam", "https://store.steampowered.com/app/3293450/Blazium_Engine/")
   em.set_footer("Blazium Community Bot", icon=str(config.bot.botpfp))
   await ctx.respond(embed=em)
 
